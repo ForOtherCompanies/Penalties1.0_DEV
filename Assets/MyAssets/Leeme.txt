@@ -1,0 +1,33 @@
+Todo lo que hagamos nosotros va aqui dentro. las carpetas seran, mas o menos:
+
+/Scenes
+/Scripts
+/Prefabs
+/soundsFX
+
+el esqueleto de las subcarpetas debe ser equivalente en todas las ramas, de modo que si
+tenemos por ejemplo un prefab para cada jugador que incluye scripts y sonidos podria ser:
+
+
+
+->MyAssets
+|-->prefabs
+|  |-->jugadores
+|  |---
+|
+|-->scripts
+|  |-->jugadores
+|  |  |->Control.cs
+|  |  |->AudioManager.cs
+|  |---
+|
+|
+|-->soundsFX
+|  |-->jugadores
+|  |  |-->grito.mp3
+|  |  |-->patada.mp3
+|  |---
+ 
+
+de esta forma tenemos los distintos componentes agrupados por tipo y al mismo tiempo clasificados
+segun el objeto que componen

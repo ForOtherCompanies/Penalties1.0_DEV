@@ -1,0 +1,2 @@
+aqui debe ir cualquier asset que descarguemos de la store u otro sitio repitiendo, en la medida
+de lo posible, la estructura que hagamos en MyAssets
