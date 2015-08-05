@@ -55,7 +55,7 @@ public class input : MonoBehaviour
 				timer = time;
 				first = true;
 				fin = new Vector2 (Input.mousePosition.x, Input.mousePosition.y);
-				lanzado = true;
+				//lanzado = true;
 				lanzar ();
 			}
 		}
