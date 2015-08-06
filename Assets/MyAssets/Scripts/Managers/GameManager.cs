@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
 	//only for debug
 	public GameObject raycastMark;
 
+
+
 //	public void RealizarAcciones (Vector2 inicioTouch, Vector3 destinoTouch, bool parar)
 	public void RealizarAcciones (Vector2 inicioTouch, Vector3 destinoTouch)
 	{

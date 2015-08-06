@@ -10,8 +10,11 @@ public class Reiniciar : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other){
 		pelota.transform.position = posicion.transform.position;
-		pelota.GetComponent<Rigidbody>().velocity = Vector3.zero;
+
 		pelota.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+		pelota.GetComponent<Rigidbody>().velocity = Vector3.zero;
+		pelota.GetComponent<Rigidbody>().isKinematic = true;
+		pelota.GetComponent<PelotaFisicas>().recibiendoEfecto = false;
 		inputEffects.enabled = true;
 	}
 	
