@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour {
 
 	//keepPublic
 	public PelotaFisicas pelota;
+	public PorteroFisicas portero;
 	public GameObject pelotaPosicionLanzamiento;
 	public Camera mainCamera;
 
@@ -25,17 +26,18 @@ public class GameManager : MonoBehaviour {
 
 
 
-	public void RealizarAcciones(Vector2 inicioTouch, Vector3 destinoTouch){
+	public void RealizarAcciones(Vector2 inicioTouch, Vector3 destinoTouch,bool parar){
 		//if 'estamos como delantero y todo esta correcto para lanzar'
 		////then pelota.fisicas.Lanzar (inicio, fin,fuerza);
-		if (PrepararLanzamiento (inicioTouch, destinoTouch))
-			pelota.Lanzaminento(direccionTiro, fuerzaTiro);
-
+		if (PrepararLanzamiento (inicioTouch, destinoTouch,parar)) {
+			//pelota.Lanzaminento(direccionTiro, fuerzaTiro);
+			portero.Saltar(direccionTiro, fuerzaTiro);
+		}
 
 	}
 
 	//nos tiene que devolver el vector direccion y la fuerza del lanzamiento.
-	bool PrepararLanzamiento (Vector2 inicio, Vector2 fin){
+	bool PrepararLanzamiento (Vector2 inicio, Vector2 fin,bool parar){
 
 		RaycastHit hit;
 		Ray ray = mainCamera.ScreenPointToRay(fin);
@@ -45,7 +47,10 @@ public class GameManager : MonoBehaviour {
 
 				direccionTiro =  hit.point - pelotaPosicionLanzamiento.transform.position;
 				direccionTiro = direccionTiro.normalized;
-
+				if(parar){
+					direccionTiro.z=0;
+				}
+				direccionTiro.y *=2.68f;
 				fuerzaTiro =  Vector2.Distance(fin,inicio);
 
 				

@@ -33,7 +33,6 @@ public class PelotaFisicas : MonoBehaviour {
 	}
 
 	public void Lanzaminento(Vector3 direccion, float fuerza){
-		rb.AddForce (direccion*fuerza/10, ForceMode.Impulse);
-
+		rb.AddForce (direccion * fuerza*2);
 	}
 }
