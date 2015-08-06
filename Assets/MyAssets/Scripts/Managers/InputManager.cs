@@ -3,7 +3,7 @@ using System.Collections;
 
 public class InputManager : MonoBehaviour {
 
-	public bool portero = true;
+//	public bool portero = true;
 
 	//to set private
 	public Vector2 inicioTouch = Vector2.zero;
@@ -37,7 +37,8 @@ public class InputManager : MonoBehaviour {
 			//al final del touch guaradr la posicion y llamar a la funcion que calcula el tiro pasando los parametros
 			if (myTouch.phase == TouchPhase.Ended){
 				finTouch = myTouch.position;
-				gameManager.RealizarAcciones (inicioTouch, finTouch,portero);		
+//				gameManager.RealizarAcciones (inicioTouch, finTouch,portero);		
+				gameManager.RealizarAcciones (inicioTouch, finTouch);		
 				inputEffects.Parar();
 			}
 		}

@@ -3,14 +3,28 @@ using System.Collections;
 
 public class PelotaFisicas : MonoBehaviour {
 
-//	bool control = false;
 
+	//references to components
 	public Rigidbody rb;
+
+
+	//set private
+	public bool enVuelo = false;
+
+
+
+	//debugOnly
+
 	void Start() {
 		rb = GetComponent<Rigidbody>();
 		rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
 	}
 	void Update() {
+
+		if (enVuelo){
+			//rb.AddForce (Vector3.left * 10, ForceMode.Force);
+		}
+
 
 
 		//TODO
@@ -34,5 +48,6 @@ public class PelotaFisicas : MonoBehaviour {
 
 	public void Lanzaminento(Vector3 direccion, float fuerza){
 		rb.AddForce (direccion * fuerza*2);
+		enVuelo = true;
 	}
 }
