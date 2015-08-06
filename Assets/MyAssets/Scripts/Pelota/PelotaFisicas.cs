@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PelotaFisicas : MonoBehaviour {
 
-	bool control = false;
+//	bool control = false;
 
 	public Rigidbody rb;
 	void Start() {
