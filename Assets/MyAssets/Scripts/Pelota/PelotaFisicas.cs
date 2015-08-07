@@ -13,9 +13,9 @@ public class PelotaFisicas : MonoBehaviour {
 
 	//set private
 	public bool recibiendoEfecto = false;
-	public bool efectoIA = false;
+	public bool tiroIA = false;
 	public Vector3 efecto;
-
+	public bool efectoConstanteCalculado = false;
 	private float fuerzaEfecto;
 
 
@@ -27,22 +27,29 @@ public class PelotaFisicas : MonoBehaviour {
 		rb.isKinematic = true;
 		efecto = Vector3.zero;
 	}
-	void Update() {
+	void FixedUpdate() {
 
 
 
 		//if (rb.isKinematic==false)
 			//Debug.Log ("UPDATE_EFECTO = "+ recibiendoEfecto);
+		//Debug.Log (recibiendoEfecto);
 		if (recibiendoEfecto){
-			efecto = CalcularEfecto(rotationHelper.transform.eulerAngles.z);
-			Debug.Log ("recibiendo efecto "+efecto);
+			if (!tiroIA)
+				efecto = CalcularEfectoGyro(rotationHelper.transform.eulerAngles.z);
+			else
+				if (!efectoConstanteCalculado){
+					efecto = CalcularEfectoConstante();
+					
+				}	
 			rb.AddForce (efecto, ForceMode.Force);
 
 		}
+/*
 		if (efectoIA) {
 			rb.AddForce (Vector3.left *fuerzaEfecto, ForceMode.Force);
 		}
-
+*/
 
 
 		//TODO
@@ -66,22 +73,35 @@ public class PelotaFisicas : MonoBehaviour {
 
 	public void LanzamientoIA(Vector3 direccion,float fuerza,int level){
 		rb.isKinematic = false;
-		rb.AddForce (direccion * fuerza*2);
+		tiroIA = true;
+		recibiendoEfecto = true;
+		efectoConstanteCalculado = false;
+		rb.AddForce (direccion * fuerza*2); //esto es la fuerza del tiro NO el efecto
 		if (Random.Range (0, 100) < level * 9) {
 			fuerzaEfecto = Random.Range(0,8);
-			efectoIA= true;
+
 		}
 	}
 
 	public void Lanzamiento(Vector3 direccion, float fuerza){
 		rb.isKinematic = false;
-		rb.AddForce (direccion * fuerza*2);
+		tiroIA = false;
+		rb.AddForce (direccion * fuerza*2); //esto es la fuerza del tiro NO el efecto
 		recibiendoEfecto = true;
-		Debug.Log ("LANZAMIENTO_EFECTO = "+ recibiendoEfecto);
+		//Debug.Log ("LANZAMIENTO_EFECTO = "+ recibiendoEfecto);
 
 	}
 
-	Vector3 CalcularEfecto(float angle){
+	//el vector3 retornado incluye direccion+modulo
+	Vector3 CalcularEfectoConstante(){
+		float modulo = Random.Range (-8.0f, 8.0f);
+		Debug.Log ("efecto constante aplicado"+Vector3.left * modulo);
+		efectoConstanteCalculado = true;
+		return Vector3.left * modulo;
+	}
+
+	//el vector3 retornado incluye direccion+modulo
+	Vector3 CalcularEfectoGyro(float angle){
 		float factor = 0;
 	
 		//si inclina a la izquierda

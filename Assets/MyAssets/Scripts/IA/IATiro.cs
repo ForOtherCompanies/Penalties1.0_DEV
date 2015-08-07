@@ -27,6 +27,7 @@ public class IATiro : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
+	/*
 	void Update () {
 		if(Input.GetKeyDown("space")){
 			x = Random.Range(MinX,MaxX);
@@ -39,5 +40,17 @@ public class IATiro : MonoBehaviour {
 			pelota.LanzamientoIA(direccion,fuerza,level);
 			level = Mathf.Clamp(level,0,8)+1;
 		}
+	}
+*/
+	public void Tirar(){
+		x = Random.Range(MinX,MaxX);
+		y = Random.Range(MinY,MaxY);
+		impacto = new Vector3(x,y,Z);
+		direccion =impacto - pelotaPosicionLanzamiento.transform.position ;
+		direccion= direccion.normalized;
+		direccion.y*=2.68f;
+		fuerza = Random.Range(MinForce,MaxForce);
+		pelota.LanzamientoIA(direccion,fuerza,level);
+		level = Mathf.Clamp(level,0,8)+1;
 	}
 }
