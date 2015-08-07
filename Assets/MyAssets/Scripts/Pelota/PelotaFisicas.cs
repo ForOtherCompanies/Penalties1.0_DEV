@@ -13,7 +13,10 @@ public class PelotaFisicas : MonoBehaviour {
 
 	//set private
 	public bool recibiendoEfecto = false;
+	public bool efectoIA = false;
 	public Vector3 efecto;
+
+	private float fuerzaEfecto;
 
 
 	//debugOnly
@@ -31,11 +34,13 @@ public class PelotaFisicas : MonoBehaviour {
 		//if (rb.isKinematic==false)
 			//Debug.Log ("UPDATE_EFECTO = "+ recibiendoEfecto);
 		if (recibiendoEfecto){
-
-			efecto = CalcularEfecto();
+			efecto = CalcularEfecto(rotationHelper.transform.eulerAngles.z);
 			Debug.Log ("recibiendo efecto "+efecto);
 			rb.AddForce (efecto, ForceMode.Force);
 
+		}
+		if (efectoIA) {
+			rb.AddForce (Vector3.left *fuerzaEfecto, ForceMode.Force);
 		}
 
 
@@ -59,7 +64,16 @@ public class PelotaFisicas : MonoBehaviour {
 */
 	}
 
-	public void Lanzaminento(Vector3 direccion, float fuerza){
+	public void LanzamientoIA(Vector3 direccion,float fuerza,int level){
+		rb.isKinematic = false;
+		rb.AddForce (direccion * fuerza*2);
+		if (Random.Range (0, 100) < level * 9) {
+			fuerzaEfecto = Random.Range(0,8);
+			efectoIA= true;
+		}
+	}
+
+	public void Lanzamiento(Vector3 direccion, float fuerza){
 		rb.isKinematic = false;
 		rb.AddForce (direccion * fuerza*2);
 		recibiendoEfecto = true;
@@ -67,35 +81,26 @@ public class PelotaFisicas : MonoBehaviour {
 
 	}
 
-	Vector3 CalcularEfecto(){
-		float factor;
-
-		float angle = rotationHelper.transform.eulerAngles.z;
+	Vector3 CalcularEfecto(float angle){
+		float factor = 0;
+	
 		//si inclina a la izquierda
-		if (rotationHelper.transform.eulerAngles.z > 0 && rotationHelper.transform.eulerAngles.z < 90){
-			if (angle > 100)
-				angle = Mathf.Clamp (angle, 0, 45); //clamp a 45, es decir 45º a derecha es el maximo que se registra para el efecto
+		if (angle > 0 && angle< 90){
+			angle = Mathf.Clamp (angle, 0, 45); //clamp a 45, es decir 45º a derecha es el maximo que se registra para el efecto
 
-			factor = angle * maximoEfecto/45;
-			Vector3 tempEfecto = Vector3.left * factor;
-
-			return tempEfecto;
 		}
-
 
 		//si inclina a derecha
-		if (rotationHelper.transform.eulerAngles.z <360 && rotationHelper.transform.eulerAngles.z > 270){
-			if (angle > 280)
-				angle = Mathf.Clamp (angle, 360, 315); //clamp a 45, es decir 45º a derecha es el maximo que se registra para el efecto
-
-			angle = Mathf.Abs (360-angle);
-			factor = angle * maximoEfecto/45;
-			Vector3 tempEfecto = -Vector3.left * factor;
-			
-			return tempEfecto;
+		if (angle<360 && angle > 270){
+			angle = Mathf.Clamp (angle, 315, 360); //clamp a 45, es decir 45º a derecha es el maximo que se registra para el efecto
+			angle-=360;
 		}
 
-		return Vector3.zero;
+		factor = angle * maximoEfecto/45;
+		//si no se inclina factor = 0 por lo que el temEfecto es (0,0,0)
+		Vector3 tempEfecto = Vector3.left * factor;
+		
+		return tempEfecto;
 	}
 
 	public void OnCollisionEnter (Collision col){

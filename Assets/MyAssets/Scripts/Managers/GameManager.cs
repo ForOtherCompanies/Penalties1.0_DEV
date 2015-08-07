@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
 			if (PrepararLanzamiento (inicioTouch, destinoTouch)) {
 				//pelota.lanzamiento se lanzara desde la animacion del player tirando para que coincida con el momento justo
 				////desde aqui lo que habra que hacer es poner la animacion en 'play'
-				pelota.Lanzaminento (direccionTiro, fuerzaTiro);
+				pelota.Lanzamiento (direccionTiro, fuerzaTiro);
 				return;
 			}
 		}
