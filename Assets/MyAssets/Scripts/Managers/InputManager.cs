@@ -12,7 +12,8 @@ public class InputManager : MonoBehaviour {
 	Touch myTouch; 
 
 	//references to other scripts
-	public GameManager gameManager;
+	//public GameManager gameManager;
+	public GameModeVirtual gameManager;
 	public InputEffects inputEffects;
 
 
