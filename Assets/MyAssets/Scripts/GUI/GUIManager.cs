@@ -6,6 +6,7 @@ public class GUIManager : MonoBehaviour {
 
 	public void moverEntrenamiento(){
 		cameraManager.MoverEntrenamiento ();
+
 	}
 	public void MoverInicio(){
 		cameraManager.MoverInicio ();

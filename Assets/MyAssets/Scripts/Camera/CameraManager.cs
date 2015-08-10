@@ -24,7 +24,7 @@ public class CameraManager : MonoBehaviour {
 			transform.position = Vector3.SmoothDamp (transform.position, targetPosition, ref velocity, smoothTime);
 			if(transform.position == objetivo.position){
 				mover = false;
-				activarEntrenamiento();
+				activarCamara();
 			}
 		}
 		if (rotar) {
@@ -53,7 +53,8 @@ public class CameraManager : MonoBehaviour {
 		X = 40;
 		Y = 180;
 	}
-	void activarEntrenamiento(){
+	void activarCamara(){
 		camara.SetActive(true);
+
 	}
 }
