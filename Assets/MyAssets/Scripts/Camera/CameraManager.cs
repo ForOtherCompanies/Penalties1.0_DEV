@@ -3,24 +3,25 @@ using System.Collections;
 
 public class CameraManager : MonoBehaviour {
 
-	private Transform objetivo;
-	public float smoothTime = 0.3F;
-	private Vector3 velocity = Vector3.zero;
-	public float smooth = 2.0F;
-	public float tiltAngle = 45.0F;
-	private bool mover = false;
+	//keep public
+	public GUIManager guiManager;
 	public GameObject [] camaras;
 	public Transform [] objetivos;
+	//keep private
+	private float smoothTime = 0.3F;
+	private Transform objetivo;
+	private Vector3 velocity = Vector3.zero;
+	private float smooth = 2.0F;
+	private bool mover = false;
 	private GameObject camara;
-	private float X;
-	private float Y;
-	public GUIManager guiManager;
 	private bool rotar= false;
+	private Quaternion target;
+	private Vector3 targetPosition;
 	
 	// Update is called once per frame
 	void Update () {
 		if (mover) {
-			Vector3 targetPosition = objetivo.position;
+
 			transform.position = Vector3.SmoothDamp (transform.position, targetPosition, ref velocity, smoothTime);
 			if(transform.position == objetivo.position){
 				mover = false;
@@ -28,9 +29,10 @@ public class CameraManager : MonoBehaviour {
 			}
 		}
 		if (rotar) {
-			float tiltAroundZ = Input.GetAxis ("Horizontal") * tiltAngle;
-			Quaternion target = Quaternion.Euler (X, Y, tiltAroundZ);
 			transform.rotation = Quaternion.Slerp (transform.rotation, target, Time.deltaTime * smooth);
+			if(transform.rotation== target){
+				rotar = false;
+			}
 		}
 
 	}
@@ -41,8 +43,8 @@ public class CameraManager : MonoBehaviour {
 		camara = camaras [1];
 		mover = true;
 		rotar = true;
-		X = 25;
-		Y = 0;
+		target =  Quaternion.Euler (25, 0, 0);
+		targetPosition = objetivo.position;
 	}
 	public void MoverInicio(){
 		camaras [1].SetActive(false);
@@ -50,11 +52,10 @@ public class CameraManager : MonoBehaviour {
 		camara = camaras [0];
 		mover = true;
 		rotar = true;
-		X = 40;
-		Y = 180;
+		target= Quaternion.Euler (40, 180, 0);
+		targetPosition = objetivo.position;
 	}
 	void activarCamara(){
 		camara.SetActive(true);
-
 	}
 }
