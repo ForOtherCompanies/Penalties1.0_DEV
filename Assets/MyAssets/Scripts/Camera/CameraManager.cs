@@ -5,7 +5,7 @@ public class CameraManager : MonoBehaviour {
 
 	//keep public
 	public GUIManager guiManager;
-	public GameObject [] camaras;
+	public Camera [] camaras;
 	public Transform [] objetivos;
 	//keep private
 	private float smoothTime = 0.3F;
@@ -13,10 +13,14 @@ public class CameraManager : MonoBehaviour {
 	private Vector3 velocity = Vector3.zero;
 	private float smooth = 2.0F;
 	private bool mover = false;
-	private GameObject camara;
+	private Camera camara;
 	private bool rotar= false;
 	private Quaternion target;
 	private Vector3 targetPosition;
+
+	void Start(){
+		camara = camaras [0];
+	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -38,7 +42,7 @@ public class CameraManager : MonoBehaviour {
 	}
 
 	public void MoverEntrenamiento(){
-		camaras [0].SetActive(false);
+		camara.enabled = false;
 		objetivo = objetivos [1];
 		camara = camaras [1];
 		mover = true;
@@ -46,8 +50,18 @@ public class CameraManager : MonoBehaviour {
 		target =  Quaternion.Euler (25, 0, 0);
 		targetPosition = objetivo.position;
 	}
+
+	public void MoverMultijugador(){
+		camara.enabled = false;
+		objetivo = objetivos [2];
+		camara = camaras [2];
+		mover = true;
+		rotar = true;
+		target =  Quaternion.Euler (30, 270, 0);
+		targetPosition = objetivo.position;
+	}
 	public void MoverInicio(){
-		camaras [1].SetActive(false);
+		camara.enabled = false;
 		objetivo = objetivos [0];
 		camara = camaras [0];
 		mover = true;
@@ -56,6 +70,6 @@ public class CameraManager : MonoBehaviour {
 		targetPosition = objetivo.position;
 	}
 	void activarCamara(){
-		camara.SetActive(true);
+		camara.enabled = true;
 	}
 }

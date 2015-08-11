@@ -11,4 +11,7 @@ public class GUIManager : MonoBehaviour {
 	public void MoverInicio(){
 		cameraManager.MoverInicio ();
 	}
+	public void moverMultijugador(){
+		cameraManager.MoverMultijugador ();
+	}
 }
