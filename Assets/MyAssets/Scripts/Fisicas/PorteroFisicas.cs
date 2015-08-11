@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PorteroFisicas : MonoBehaviour {
+public class PorteroFisicas : PhysicManager{
 
 	// Use this for initialization
-	public Rigidbody rb;
+
 
 	void Start() {
 		rb = GetComponent<Rigidbody>();
@@ -14,6 +14,9 @@ public class PorteroFisicas : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
+	}
+	public override void AccionIA(Vector3 direccion, float fuerza,int level){
+		rb.AddForce (direccion * fuerza*2);
 	}
 	public void Saltar(Vector3 direccion, float fuerza){
 		rb.AddForce (direccion * fuerza*2);

@@ -1,21 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PelotaFisicas : MonoBehaviour {
+public class PelotaFisicas : PhysicManager {
 
 	//references to external
 	public GameObject rotationHelper;
 
 
 	//references to components
-	public Rigidbody rb;
-	public float maximoEfecto = 8f;
+	private float maximoEfecto = 8f;
 
 	//set private
 	public bool recibiendoEfecto = false;
-	public bool tiroIA = false;
-	public Vector3 efecto;
-	public bool efectoConstanteCalculado = false;
+	private bool tiroIA = false;
+	private Vector3 efecto;
+	private bool efectoConstanteCalculado = false;
 	private float fuerzaEfecto;
 
 
@@ -71,7 +70,7 @@ public class PelotaFisicas : MonoBehaviour {
 */
 	}
 
-	public void LanzamientoIA(Vector3 direccion,float fuerza,int level){
+	public override void AccionIA(Vector3 direccion,float fuerza,int level){
 		rb.isKinematic = false;
 		tiroIA = true;
 		recibiendoEfecto = true;
