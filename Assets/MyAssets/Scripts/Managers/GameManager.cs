@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
 	//// variables para el portero
 	public Vector3 direccionSalto;
 	public float fuerzaSalto;
+	
 
 	//public float maxJumpMagnitude = 
 

@@ -11,6 +11,7 @@ using System.Collections;
 public class GameModeManager : MonoBehaviour {
 	public EntrenamientoDianas entrenamientoDianas;
 	public EntrenamientoEstandar entrenamientoEstandar;
+	public EntrenamientoParadas entrenamientoParadas;
 
 	//punteros a los distintos game modes (cada uno un gameobjecto completo o solo el script?)
 

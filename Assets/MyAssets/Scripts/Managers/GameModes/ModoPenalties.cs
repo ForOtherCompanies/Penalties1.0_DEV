@@ -13,23 +13,29 @@ public class ModoPenalties : GameModeVirtual {
 	public PorteroFisicas portero;
 	public GameObject pelotaPosicionLanzamiento;
 	public GameObject posicionPortero;
-	public Camera mainCamera;
-	public ModoJuego modoJuego;
+	public GameObject mainCamera;
+	public InputManager input;
+	public IAPortero iaPortero;
+	public IATiro iaTiro;
 	
+	//keep protected
+	protected ModoJuego rolActual;
+	protected float timer;
+	protected float contador;
 	//setPrivate
 	//// variables para el lanzamiento
-	public Vector3 direccionTiro;
-	public float fuerzaTiro;
+	private Vector3 direccionTiro;
+	private float fuerzaTiro;
 	//// variables para el portero
-	public Vector3 direccionSalto;
-	public float fuerzaSalto;
+	private Vector3 direccionSalto;
+	private float fuerzaSalto;
 
 
 	public override void RealizarAcciones (Vector2 inicioTouch, Vector3 destinoTouch)
 	{
 		//if 'estamos como delantero y todo esta correcto para lanzar'
 		////then pelota.fisicas.Lanzar (inicio, fin,fuerza);
-		if (modoJuego == ModoJuego.Tirador){
+		if (rolActual == ModoJuego.Tirador){
 			if (PrepararLanzamiento (inicioTouch, destinoTouch)) {
 				//pelota.lanzamiento se lanzara desde la animacion del player tirando para que coincida con el momento justo
 				////desde aqui lo que habra que hacer es poner la animacion en 'play'
@@ -38,11 +44,10 @@ public class ModoPenalties : GameModeVirtual {
 			}
 		}
 		
-		if (modoJuego == ModoJuego.Portero){
+		if (rolActual == ModoJuego.Portero){
 			PrepararSaltoPortero (inicioTouch, destinoTouch);
 			portero.Saltar (direccionSalto, fuerzaSalto);
 		}
-		
 	}
 
 	//nos tiene que devolver el vector direccion y la fuerza del lanzamiento.
@@ -51,7 +56,7 @@ public class ModoPenalties : GameModeVirtual {
 	{
 		
 		RaycastHit hit;
-		Ray ray = mainCamera.ScreenPointToRay (fin);
+		Ray ray = mainCamera.GetComponent<Camera>().ScreenPointToRay (fin);
 		
 		if (Physics.Raycast (ray, out hit, 500)) {
 			if (hit.transform.tag == "RaycastReactor") {
@@ -82,5 +87,7 @@ public class ModoPenalties : GameModeVirtual {
 		fuerzaSalto = vectorSalto.magnitude;
 		direccionSalto = vectorSalto.normalized;
 		
+	}
+	virtual public void finModoJuego(){
 	}
 }

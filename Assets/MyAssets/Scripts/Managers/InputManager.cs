@@ -9,18 +9,12 @@ public class InputManager : MonoBehaviour {
 	public Vector2 inicioTouch = Vector2.zero;
 	public Vector2 finTouch = Vector2.zero;
 
-	Touch myTouch; 
+	private Touch myTouch; 
 
 	//references to other scripts
 	//public GameManager gameManager;
 	public GameModeVirtual gameManager;
 	public InputEffects inputEffects;
-
-
-	// Use this for initialization
-	void Start () {
-
-	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -37,8 +31,7 @@ public class InputManager : MonoBehaviour {
 
 			//al final del touch guaradr la posicion y llamar a la funcion que calcula el tiro pasando los parametros
 			if (myTouch.phase == TouchPhase.Ended){
-				finTouch = myTouch.position;
-//				gameManager.RealizarAcciones (inicioTouch, finTouch,portero);		
+				finTouch = myTouch.position;	
 				gameManager.RealizarAcciones (inicioTouch, finTouch);		
 				inputEffects.Parar();
 			}
