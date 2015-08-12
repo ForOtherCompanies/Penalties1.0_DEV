@@ -126,5 +126,9 @@ public class PelotaFisicas : PhysicManager {
 		recibiendoEfecto = false;
 	}
 
-
+	public override void reiniciar ()
+	{
+		base.reiniciar ();
+		recibiendoEfecto = false;
+	}
 }

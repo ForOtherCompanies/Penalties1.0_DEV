@@ -7,7 +7,7 @@ public class EntrenamientoEstandar : ModoPenalties
 	private int fase;
 	private bool accionIA = false;
 	private bool accionRealizada = false;
-	private float tiempoParada = 0.75f;
+	private float tiempoParada = 0.5f;
 	private float tiempoEntreFases = 3f;
 	private float tiempoIATiro = 3.5f;
 	private float contadorIA = 0;
@@ -20,7 +20,25 @@ public class EntrenamientoEstandar : ModoPenalties
 		timer = 10;
 		rolActual = ModoJuego.Tirador;
 		fase = 0;
-		InicioFase ();
+		ColocarCamara ();
+		input.enabled = true;
+		EmpezarContador ();
+	}
+
+	void Start(){
+		timer = 10;
+		rolActual = ModoJuego.Tirador;
+		fase = 0;
+		ColocarCamara ();
+		input.enabled = true;
+		EmpezarContador ();
+		if (rolActual == ModoJuego.Portero) {
+			iaPortero.enabled = true;
+			iaTiro.enabled = false;
+		} else {
+			iaPortero.enabled = false;
+			iaTiro.enabled = true;
+		}
 	}
 
 	void Update ()
@@ -31,29 +49,30 @@ public class EntrenamientoEstandar : ModoPenalties
 				iaTiro.RealizarAccion();
 				accionIA = true;
 				esperaTiro = false;
-				InicioFase();
+				accionRealizada = true;
 			}
 		}
 		if (accionRealizada) {
 			contadorCambioFase+=Time.deltaTime;
-			if(contador>tiempoEntreFases){
+			if(contadorCambioFase>tiempoEntreFases){
 				accionRealizada= false;
 				InicioFase ();
 			}
 		}
 		if (accionIA) {
 			contadorIA+=Time.deltaTime;
-			if(rolActual==ModoJuego.Portero && contadorIA>tiempoParada){
+			if(rolActual==ModoJuego.Tirador && contadorIA>tiempoParada){
 				iaPortero.RealizarAccion();
 				accionIA= false;
 			}
-			if(rolActual == ModoJuego.Tirador &&contadorIA>tiempoIATiro){
+			if(rolActual == ModoJuego.Portero &&contadorIA>tiempoIATiro){
 				iaTiro.RealizarAccion();
 				accionIA= false;
 			}
 		}
 	}
 
+	//funciona
 	public override void RealizarAcciones (Vector2 inicioTouch, Vector3 destinoTouch)
 	{
 		base.RealizarAcciones (inicioTouch, destinoTouch);//realiza lo que sea con la fisica
@@ -63,12 +82,16 @@ public class EntrenamientoEstandar : ModoPenalties
 
 	}
 
+	//funciona
 	void EmpezarContador ()
 	{
-		this.contador = 0;
+		contador = 0;
+		contadorCambioFase = 0;
+		contadorIA = 0;
 		esperaTiro = true;
 	}
 
+	//funciona
 	void InicioFase ()
 	{
 		if (fase < 5) {
@@ -81,29 +104,38 @@ public class EntrenamientoEstandar : ModoPenalties
 				rolActual = ModoJuego.Portero;
 				iaPortero.enabled = false;
 				iaTiro.enabled = true;
+				accionIA = true;
 			}
 			ColocarCamara ();
 			input.enabled = true;
+			reset();
 			EmpezarContador ();
 		} else {
 			finModoJuego ();
 		}
 	}
 
+
+	//funciona
 	void ColocarCamara(){
-		float x,y,z;
-		x = mainCamera.transform.rotation.x;
-		y = mainCamera.transform.rotation.y;
-		z = mainCamera.transform.rotation.z;
 		if (rolActual == ModoJuego.Portero) {
 			mainCamera.transform.position = posicionCamaraPortero.transform.position;
-			mainCamera.transform.Rotate(25f-x,180f-y, 0f-z, Space.World);
+			//mainCamera.transform.Rotate(0f,180f, 0f);
+			mainCamera.transform.rotation = posicionCamaraPortero.transform.rotation;
 		} else {
 			mainCamera.transform.position = posicionCamaraTirador.transform.position;
+		//	mainCamera.transform.Rotate(0f,0f, 0f);
 			
-			mainCamera.transform.Rotate(25f-x,0f-y, 0f-z, Space.World);
+			mainCamera.transform.rotation = posicionCamaraTirador.transform.rotation;
 		}
 	}
+
+
+	public void reset(){
+		pelota.reiniciar();
+		portero.reiniciar ();
+	}
+
 
 	public override void finModoJuego ()
 	{

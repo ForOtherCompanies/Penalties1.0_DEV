@@ -19,7 +19,7 @@ public class ModoPenalties : GameModeVirtual {
 	public IATiro iaTiro;
 	
 	//keep protected
-	protected ModoJuego rolActual;
+	public ModoJuego rolActual;
 	protected float timer;
 	protected float contador;
 	//setPrivate
