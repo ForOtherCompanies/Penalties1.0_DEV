@@ -9,19 +9,23 @@ public class ModoPenalties : GameModeVirtual {
 	public enum ModoJuego{Tirador, Portero};
 	
 	//keepPublic
-	public PelotaFisicas pelota;
-	public PorteroFisicas portero;
-	public GameObject pelotaPosicionLanzamiento;
-	public GameObject posicionPortero;
 	public GameObject mainCamera;
 	public InputManager input;
 	public IAPortero iaPortero;
 	public IATiro iaTiro;
+	public PelotaFisicas pelota;
+	public PorteroFisicas portero;
+	public GameObject pelotaPosicionLanzamiento;
+	public GameObject posicionPortero;
+	public GameObject posicionCamaraPortero;
+	public GameObject posicionCamaraTirador;
 	
 	//keep protected
-	public ModoJuego rolActual;
+	protected ModoJuego rolActual;
 	protected float timer;
 	protected float contador;
+	protected int fase;
+	protected bool accionIA = false;
 	//setPrivate
 	//// variables para el lanzamiento
 	private Vector3 direccionTiro;
@@ -29,7 +33,109 @@ public class ModoPenalties : GameModeVirtual {
 	//// variables para el portero
 	private Vector3 direccionSalto;
 	private float fuerzaSalto;
+	
+	private bool esperaTiro;
+	private bool accionRealizada = false;
+	private float tiempoParada = 0.5f;
+	private float tiempoEntreFases = 3f;
+	private float tiempoIATiro = 3.5f;
+	private float contadorIA = 0;
+	private float contadorCambioFase= 0;
+	
+	
 
+	public virtual void OnEnable ()
+	{
+		timer = 10;
+		rolActual = ModoJuego.Tirador;
+		fase = 0;
+		ColocarCamara ();
+		input.enabled = true;
+		EmpezarContador ();
+	}
+	//debera desaparecer luego sera solo el OnEnable
+	public virtual void Start(){
+		timer = 10;
+		rolActual = ModoJuego.Tirador;
+		fase = 0;
+		ColocarCamara ();
+		input.enabled = true;
+		EmpezarContador ();
+	}
+	
+	public virtual void Update ()
+	{
+		if (esperaTiro) {
+			contador += Time.deltaTime;
+			if (contador > timer) {
+				iaTiro.RealizarAccion();
+				//accionIA = true;
+				esperaTiro = false;
+				accionRealizada = true;
+			}
+		}
+		if (accionRealizada) {
+			contadorCambioFase+=Time.deltaTime;
+			//para sincronizar con el fade in/out
+			if (contadorCambioFase > tiempoEntreFases-1)
+				cameraEffects.IniciarCicloOutIn();
+			
+			if(contadorCambioFase>tiempoEntreFases){
+				accionRealizada= false;
+				InicioFase ();
+			}
+		}
+		if (accionIA) {
+			contadorIA+=Time.deltaTime;
+			if(rolActual==ModoJuego.Tirador && contadorIA>tiempoParada){
+				if(iaPortero!=null)
+					iaPortero.RealizarAccion();
+				accionIA= false;
+			}
+			if(rolActual == ModoJuego.Portero &&contadorIA>tiempoIATiro){
+				accionRealizada = true;
+				iaTiro.RealizarAccion();
+				accionIA= false;
+			}
+		}
+	}
+
+	//funciona
+	public void EmpezarContador ()
+	{
+		contador = 0;
+		contadorCambioFase = 0;
+		contadorIA = 0;
+		esperaTiro = true;
+	}
+	
+	//funciona overrride TODO
+	public virtual void InicioFase ()
+	{}
+	
+	
+	//funciona
+	public void ColocarCamara(){
+		
+		//cameraEffects.IniciarCicloOutIn();
+		
+		if (rolActual == ModoJuego.Portero) {
+			
+			mainCamera.transform.position = posicionCamaraPortero.transform.position;
+			mainCamera.transform.rotation = posicionCamaraPortero.transform.rotation;
+		} else {
+			
+			mainCamera.transform.position = posicionCamaraTirador.transform.position;	
+			mainCamera.transform.rotation = posicionCamaraTirador.transform.rotation;
+		}
+	}
+	
+	
+	public void reset(){
+		pelota.reiniciar();
+		if(portero!=null)
+			portero.reiniciar ();
+	}
 
 	public override void RealizarAcciones (Vector2 inicioTouch, Vector3 destinoTouch)
 	{
@@ -48,6 +154,8 @@ public class ModoPenalties : GameModeVirtual {
 			PrepararSaltoPortero (inicioTouch, destinoTouch);
 			portero.Saltar (direccionSalto, fuerzaSalto);
 		}
+		esperaTiro = false;
+		accionRealizada = true;
 	}
 
 	//nos tiene que devolver el vector direccion y la fuerza del lanzamiento.
@@ -87,7 +195,5 @@ public class ModoPenalties : GameModeVirtual {
 		fuerzaSalto = vectorSalto.magnitude;
 		direccionSalto = vectorSalto.normalized;
 		
-	}
-	virtual public void finModoJuego(){
 	}
 }
