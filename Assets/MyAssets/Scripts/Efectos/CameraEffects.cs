@@ -5,32 +5,50 @@ public class CameraEffects : MonoBehaviour {
 
 	//keep public
 	public Animator fadeCameraAnimator;
-/*
+
+
+	//debug only
+	int contador;
 	void Update () {
 
+//for debug only
+/*
 		if(Input.GetKeyDown("space")){
-			if (fadeCameraAnimator.GetBool ("FadeIn"))
-				fadeCameraAnimator.SetBool ("FadeIn", false);
+			contador ++;
+			if (contador%2 == 1)
+				FadeIn();
 			else
-				fadeCameraAnimator.SetBool ("FadeIn", true);
-
-
-			if (fadeCameraAnimator.GetBool ("FadeOut"))
-				fadeCameraAnimator.SetBool ("FadeOut", false);
-			else
-				fadeCameraAnimator.SetBool ("FadeOut", true);
+				FadeOut ();
 		}
-
-	}
 */
+/////////
+	}
+
+	public void IniciarCicloOutIn(){
+		fadeCameraAnimator.SetBool ("CicloFadeOutIn", true);
+	}
+
+	public void ResetCicloFlag (){
+		fadeCameraAnimator.SetBool ("CicloFadeOutIn", false);
+	}
+/*
 	public void FadeIn () {
+
 		fadeCameraAnimator.SetBool ("FadeIn", true);
 		fadeCameraAnimator.SetBool ("FadeOut", false);
+		Debug.Log ("FADE IN hecho");
+
+	
 	}
 
 	public void FadeOut () {
+
 		fadeCameraAnimator.SetBool ("FadeIn", false);
 		fadeCameraAnimator.SetBool ("FadeOut", true);
+		Debug.Log ("FADE OUT hecho");
+
 	}
+*/
+
 
 }

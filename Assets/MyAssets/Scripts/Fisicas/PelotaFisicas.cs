@@ -94,7 +94,7 @@ public class PelotaFisicas : PhysicManager {
 	//el vector3 retornado incluye direccion+modulo
 	Vector3 CalcularEfectoConstante(){
 		float modulo = Random.Range (-8.0f, 8.0f);
-		Debug.Log ("efecto constante aplicado"+Vector3.left * modulo);
+//		Debug.Log ("efecto constante aplicado"+Vector3.left * modulo);
 		efectoConstanteCalculado = true;
 		return Vector3.left * modulo;
 	}

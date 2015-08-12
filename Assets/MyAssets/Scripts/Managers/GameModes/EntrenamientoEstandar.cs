@@ -15,9 +15,14 @@ public class EntrenamientoEstandar : ModoPenalties
 	public GameObject posicionCamaraPortero;
 	public GameObject posicionCamaraTirador;
 
+
+
+	//keep private
+
 	void OnEnable ()
 	{
 		timer = 10;
+
 		rolActual = ModoJuego.Tirador;
 		fase = 0;
 		ColocarCamara ();
@@ -43,6 +48,8 @@ public class EntrenamientoEstandar : ModoPenalties
 
 	void Update ()
 	{
+
+	
 		if (esperaTiro) {
 			contador += Time.deltaTime;
 			if (contador > timer) {
@@ -54,6 +61,10 @@ public class EntrenamientoEstandar : ModoPenalties
 		}
 		if (accionRealizada) {
 			contadorCambioFase+=Time.deltaTime;
+			//para sincronizar con el fade in/out
+			if (contadorCambioFase > tiempoEntreFases-1)// && cameraEffects.fadeCameraAnimator.GetBool("CicloFadeInOut")==false)
+				cameraEffects.IniciarCicloOutIn();
+
 			if(contadorCambioFase>tiempoEntreFases){
 				accionRealizada= false;
 				InicioFase ();
@@ -66,6 +77,7 @@ public class EntrenamientoEstandar : ModoPenalties
 				accionIA= false;
 			}
 			if(rolActual == ModoJuego.Portero &&contadorIA>tiempoIATiro){
+				accionRealizada = true;
 				iaTiro.RealizarAccion();
 				accionIA= false;
 			}
@@ -118,12 +130,22 @@ public class EntrenamientoEstandar : ModoPenalties
 
 	//funciona
 	void ColocarCamara(){
+
+		//cameraEffects.IniciarCicloOutIn();
+
 		if (rolActual == ModoJuego.Portero) {
+
 			mainCamera.transform.position = posicionCamaraPortero.transform.position;
+			//cameraEffects.FadeOut();
+			//cameraEffects.FadeIn();
 			//mainCamera.transform.Rotate(0f,180f, 0f);
+
 			mainCamera.transform.rotation = posicionCamaraPortero.transform.rotation;
 		} else {
+
 			mainCamera.transform.position = posicionCamaraTirador.transform.position;
+			//cameraEffects.FadeOut();
+			//cameraEffects.FadeIn();
 		//	mainCamera.transform.Rotate(0f,0f, 0f);
 			
 			mainCamera.transform.rotation = posicionCamaraTirador.transform.rotation;
