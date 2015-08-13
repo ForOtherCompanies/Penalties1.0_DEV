@@ -31,7 +31,7 @@ public class EntrenamientoParadas : ModoPenalties {
 			++fase;
 		}
 	}
-	public override void Update ()
+	public  void Update ()
 	{
 		EsperarJugador ();
 		AccionesRealizadas ();

@@ -37,7 +37,7 @@ public class EntrenamientoDianas : ModoPenalties
 		}
 	}
 
-	public override void Update ()
+	public void Update ()
 	{
 		EsperarJugador ();
 		AccionesRealizadas ();

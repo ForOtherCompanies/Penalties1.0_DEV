@@ -35,12 +35,12 @@ public class ModoPenalties : GameModeVirtual {
 	private float fuerzaSalto;
 	
 	private bool esperaTiro;
-	private bool accionRealizada = false;
+	public bool accionRealizada;
 	private float tiempoParada = 0.5f;
 	private float tiempoEntreFases = 3f;
 	private float tiempoIATiro = 2.5f;
 	private float contadorIA = 0;
-	private float contadorCambioFase= 0;
+	private float contadorCambioFase = 0;
 	
 	
 
@@ -52,6 +52,7 @@ public class ModoPenalties : GameModeVirtual {
 		ColocarCamara ();
 		input.enabled = true;
 		EmpezarContador ();
+		accionRealizada = false;
 	}
 	//debera desaparecer luego sera solo el OnEnable
 	public virtual void Start(){
@@ -61,18 +62,15 @@ public class ModoPenalties : GameModeVirtual {
 		ColocarCamara ();
 		input.enabled = true;
 		EmpezarContador ();
-	}
-	
-	public virtual void Update ()
-	{
+		accionRealizada = false;
 	}
 
 	protected virtual void EsperarJugador (){
 		if(accionRealizada)
-			Debug.Log ("No tengo que continuar");
+//			Debug.Log ("No tengo que continuar");
 		if (esperaTiro) {
 			contador += Time.deltaTime;
-			Debug.Log(contador);
+//			Debug.Log(contador);
 			if (contador > timer) {
 					Debug.Log(contador);
 					Debug.Log ("No tengo que tirar");
@@ -92,7 +90,7 @@ public class ModoPenalties : GameModeVirtual {
 				cameraEffects.IniciarCicloOutIn();
 			
 			if(contadorCambioFase>tiempoEntreFases){
-				accionRealizada= false;
+				accionRealizada = false;
 				InicioFase ();
 			}
 		}

@@ -18,7 +18,7 @@ public class EntrenamientoEstandar : ModoPenalties
 			EmpezarContador ();
 		}
 	}
-	public override void Update ()
+	public  void Update ()
 	{
 		EsperarJugador ();
 		AccionesRealizadas ();
