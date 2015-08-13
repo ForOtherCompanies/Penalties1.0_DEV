@@ -22,6 +22,7 @@ public class InputEffects : MonoBehaviour
 	
 	void FixedUpdate ()
 	{
+
 		if (Input.touchCount > 0 ) {
 			Touch touch = Input.GetTouch (0);
 			
@@ -33,13 +34,14 @@ public class InputEffects : MonoBehaviour
 			}
 			
 			if (touch.phase == TouchPhase.Ended) {
-				/* Remove Line */
+
 				
 				lineRenderer.SetVertexCount (0);
 				i = 0;
 			}
-		}
+		
 	}
+}
 	public void Parar(){
 		lineRenderer.SetVertexCount (0);
 		i = 0;

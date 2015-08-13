@@ -1,21 +1,20 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
-public class PelotaFisicas : MonoBehaviour {
+public class PelotaFisicas : PhysicManager {
 
 	//references to external
 	public GameObject rotationHelper;
 
 
 	//references to components
-	public Rigidbody rb;
-	public float maximoEfecto = 8f;
+	private float maximoEfecto = 8f;
 
 	//set private
 	public bool recibiendoEfecto = false;
-	public bool tiroIA = false;
-	public Vector3 efecto;
-	public bool efectoConstanteCalculado = false;
+	private bool tiroIA = false;
+	private Vector3 efecto;
+	private bool efectoConstanteCalculado = false;
 	private float fuerzaEfecto;
 
 
@@ -71,13 +70,13 @@ public class PelotaFisicas : MonoBehaviour {
 */
 	}
 
-	public void LanzamientoIA(Vector3 direccion,float fuerza,int level){
+	public override void AccionIA(Vector3 direccion,float fuerza,int level){
 		rb.isKinematic = false;
 		tiroIA = true;
-		recibiendoEfecto = true;
 		efectoConstanteCalculado = false;
 		rb.AddForce (direccion * fuerza*2); //esto es la fuerza del tiro NO el efecto
-		if (Random.Range (0, 100) < level * 9) {
+		if (Random.Range (1, 100) < level * 9) {	
+			recibiendoEfecto = true;
 			fuerzaEfecto = Random.Range(0,8);
 
 		}
@@ -95,7 +94,7 @@ public class PelotaFisicas : MonoBehaviour {
 	//el vector3 retornado incluye direccion+modulo
 	Vector3 CalcularEfectoConstante(){
 		float modulo = Random.Range (-8.0f, 8.0f);
-		Debug.Log ("efecto constante aplicado"+Vector3.left * modulo);
+//		Debug.Log ("efecto constante aplicado"+Vector3.left * modulo);
 		efectoConstanteCalculado = true;
 		return Vector3.left * modulo;
 	}
@@ -127,5 +126,9 @@ public class PelotaFisicas : MonoBehaviour {
 		recibiendoEfecto = false;
 	}
 
-
+	public override void reiniciar ()
+	{
+		base.reiniciar ();
+		recibiendoEfecto = false;
+	}
 }
