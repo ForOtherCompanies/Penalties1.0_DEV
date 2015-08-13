@@ -6,8 +6,8 @@ public class IATiro : IAManager {
 
 	void Start () {
 		level = 0;
-		MaxForce = 179f;
-		MinForce = 145f;
+		MaxForce = 190f;
+		MinForce = 175f;
 	}
 
 	public override void RealizarAccion ()
@@ -20,6 +20,6 @@ public class IATiro : IAManager {
 		direccion.y*=2.68f;
 		fuerza = Random.Range(MinForce,MaxForce);
 		fisicasIA.AccionIA(direccion,fuerza,level);
-		level = Mathf.Clamp(level,0,8)+1;
+		//level = Mathf.Clamp(level,0,8)+1;
 	}
 }

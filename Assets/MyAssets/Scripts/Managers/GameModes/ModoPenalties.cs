@@ -38,7 +38,7 @@ public class ModoPenalties : GameModeVirtual {
 	private bool accionRealizada = false;
 	private float tiempoParada = 0.5f;
 	private float tiempoEntreFases = 3f;
-	private float tiempoIATiro = 3.5f;
+	private float tiempoIATiro = 2.5f;
 	private float contadorIA = 0;
 	private float contadorCambioFase= 0;
 	
@@ -65,15 +65,26 @@ public class ModoPenalties : GameModeVirtual {
 	
 	public virtual void Update ()
 	{
+	}
+
+	protected virtual void EsperarJugador (){
+		if(accionRealizada)
+			Debug.Log ("No tengo que continuar");
 		if (esperaTiro) {
 			contador += Time.deltaTime;
+			Debug.Log(contador);
 			if (contador > timer) {
+					Debug.Log(contador);
+					Debug.Log ("No tengo que tirar");
 				iaTiro.RealizarAccion();
-				//accionIA = true;
+				accionIA = true;
 				esperaTiro = false;
 				accionRealizada = true;
 			}
 		}
+	}
+
+	protected virtual void AccionesRealizadas(){
 		if (accionRealizada) {
 			contadorCambioFase+=Time.deltaTime;
 			//para sincronizar con el fade in/out
@@ -85,11 +96,14 @@ public class ModoPenalties : GameModeVirtual {
 				InicioFase ();
 			}
 		}
+	}
+
+
+	protected virtual void AccionesIA(){
 		if (accionIA) {
 			contadorIA+=Time.deltaTime;
 			if(rolActual==ModoJuego.Tirador && contadorIA>tiempoParada){
-				if(iaPortero!=null)
-					iaPortero.RealizarAccion();
+				iaPortero.RealizarAccion();
 				accionIA= false;
 			}
 			if(rolActual == ModoJuego.Portero &&contadorIA>tiempoIATiro){
@@ -101,21 +115,24 @@ public class ModoPenalties : GameModeVirtual {
 	}
 
 	//funciona
-	public void EmpezarContador ()
+	protected void EmpezarContador ()
 	{
 		contador = 0;
 		contadorCambioFase = 0;
 		contadorIA = 0;
-		esperaTiro = true;
+		if (rolActual == ModoJuego.Tirador) {
+			esperaTiro = true;
+		} else {
+			accionIA = true; 
+		}
 	}
-	
-	//funciona overrride TODO
-	public virtual void InicioFase ()
+
+	protected virtual void InicioFase ()
 	{}
 	
 	
 	//funciona
-	public void ColocarCamara(){
+	protected void ColocarCamara(){
 		
 		//cameraEffects.IniciarCicloOutIn();
 		
@@ -131,10 +148,9 @@ public class ModoPenalties : GameModeVirtual {
 	}
 	
 	
-	public void reset(){
+	protected void reset(){
 		pelota.reiniciar();
-		if(portero!=null)
-			portero.reiniciar ();
+		portero.reiniciar ();
 	}
 
 	public override void RealizarAcciones (Vector2 inicioTouch, Vector3 destinoTouch)
@@ -146,7 +162,6 @@ public class ModoPenalties : GameModeVirtual {
 				//pelota.lanzamiento se lanzara desde la animacion del player tirando para que coincida con el momento justo
 				////desde aqui lo que habra que hacer es poner la animacion en 'play'
 				pelota.Lanzamiento (direccionTiro, fuerzaTiro);
-				return;
 			}
 		}
 		
@@ -156,6 +171,9 @@ public class ModoPenalties : GameModeVirtual {
 		}
 		esperaTiro = false;
 		accionRealizada = true;
+		input.enabled = false;
+		if(accionRealizada)
+		Debug.Log ("accion realizada");
 	}
 
 	//nos tiene que devolver el vector direccion y la fuerza del lanzamiento.

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class PelotaFisicas : PhysicManager {
@@ -73,10 +73,10 @@ public class PelotaFisicas : PhysicManager {
 	public override void AccionIA(Vector3 direccion,float fuerza,int level){
 		rb.isKinematic = false;
 		tiroIA = true;
-		recibiendoEfecto = true;
 		efectoConstanteCalculado = false;
 		rb.AddForce (direccion * fuerza*2); //esto es la fuerza del tiro NO el efecto
-		if (Random.Range (0, 100) < level * 9) {
+		if (Random.Range (1, 100) < level * 9) {	
+			recibiendoEfecto = true;
 			fuerzaEfecto = Random.Range(0,8);
 
 		}

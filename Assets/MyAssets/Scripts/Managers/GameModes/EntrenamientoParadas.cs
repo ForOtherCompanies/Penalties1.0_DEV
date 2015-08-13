@@ -4,15 +4,25 @@ using System.Collections;
 public class EntrenamientoParadas : ModoPenalties {
 	public override void OnEnable ()
 	{	timer = 10;
-		rolActual = ModoJuego.Tirador;
+		rolActual = ModoJuego.Portero;
 		fase = 0;
 		ColocarCamara ();
 		input.enabled = true;
 		EmpezarContador ();
 	}
-	public override void InicioFase ()
+
+	public override void Start ()
+	{	timer = 10;
+		rolActual = ModoJuego.Portero;
+		fase = 0;
+		ColocarCamara ();
+		input.enabled = true;
+		EmpezarContador ();
+	}
+
+	protected override void InicioFase ()
 	{
-		if (fase>0) {
+		if (fase<10) {
 			rolActual = ModoJuego.Portero;
 			ColocarCamara ();
 			input.enabled = true;
@@ -20,5 +30,11 @@ public class EntrenamientoParadas : ModoPenalties {
 			EmpezarContador ();	
 			++fase;
 		}
+	}
+	public override void Update ()
+	{
+		EsperarJugador ();
+		AccionesRealizadas ();
+		AccionesIA ();
 	}
 }

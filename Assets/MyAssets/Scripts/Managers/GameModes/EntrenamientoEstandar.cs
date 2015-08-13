@@ -3,7 +3,7 @@ using System.Collections;
 
 public class EntrenamientoEstandar : ModoPenalties
 {
-	public override void InicioFase ()
+	protected override void InicioFase ()
 	{
 		if (fase < 5) {
 			if (rolActual == ModoJuego.Portero) {
@@ -11,13 +11,18 @@ public class EntrenamientoEstandar : ModoPenalties
 				rolActual = ModoJuego.Tirador;
 			} else {
 				rolActual = ModoJuego.Portero;
-				iaPortero.enabled = false;
 			}
 			ColocarCamara ();
 			input.enabled = true;
 			reset();
 			EmpezarContador ();
 		}
+	}
+	public override void Update ()
+	{
+		EsperarJugador ();
+		AccionesRealizadas ();
+		AccionesIA ();
 	}
 
 
