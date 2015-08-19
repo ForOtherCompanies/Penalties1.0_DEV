@@ -53,6 +53,7 @@ public class ModoPenalties : GameModeVirtual {
 		input.enabled = true;
 		EmpezarContador ();
 		accionRealizada = false;
+		pelota.reiniciar();
 	}
 	//debera desaparecer luego sera solo el OnEnable
 	public virtual void Start(){

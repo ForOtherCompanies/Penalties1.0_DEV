@@ -1,0 +1,10 @@
+cuando mergeemos en la rama slave hacer aqui dos carpetas, una para los scripts
+de juego y otra para los del modo vestuario que van a ser varios
+
+-->hay que hacer un prefab boton que incluya el script 'BotonComplemento' para instanciarlo las veces que sea necesario. El script
+----incluira cosas como el precio del objeto y tal con lo que el boton quedara fuertemente acoplado al objeto
+
+-->hay que hacer otro prefab para las pestañas de modo y deben incluir el script 'categoria complementos'.
+
+--> con este enfoque creo que no hace falta que las categorias apunten a la lista de botones que tiene cada una ya que el flujo
+----es justo al reves y cada boton si que apunta a su categoria.
