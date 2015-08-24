@@ -9,7 +9,7 @@ public class CategoriaComplemento : MonoBehaviour {
 
 	public GameObject boneParent;
 	public GameObject positionHelper;
-	public Texture prueba;
+	//public Texture prueba;
 
 	public GameObject buttonsHolder;//donde se guardaran los botones
 	public int numBotones;//num de elemtos que contendra el prefab
@@ -33,7 +33,7 @@ public class CategoriaComplemento : MonoBehaviour {
 			GameObject newButton = Instantiate (button);
 			newButton.transform.SetParent(buttonsHolder.transform, false);
 			newButton.transform.position = posicionActual;
-			Image imagen = newButton.GetComponent<Image>();
+			//Image imagen = newButton.GetComponent<Image>();
 			//imagen.material.mainTexture = prueba;
 
 			if((i+1)%3==0){
