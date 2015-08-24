@@ -24,9 +24,14 @@ public class BotonComplemento : MonoBehaviour {
 
 	//esta es la funcion a llamar en el onclick sobre el boton
 	public void PerformActions (){
+
+		Debug.Log ("instanciando complemento");
 		if (comprado && !yaPuesto){
-			Destroy (categoria.complementoActivo);
+			if (categoria.complementoActivo != null)
+				Destroy (categoria.complementoActivo);
 			categoria.complementoActivo =(GameObject) Instantiate (complementoAsociado, categoria.positionHelper.transform.position, categoria.positionHelper.transform.rotation);
+			categoria.complementoActivo.transform.position = categoria.positionHelper.transform.position;
+			//categoria.complementoActivo.transform.rotation = categoria.positionHelper.transform.rotation;
 			categoria.complementoActivo.transform.parent = categoria.boneParent.transform;//o quiza rootearlo en el helper en lugar de en el bone
 		}//else pasar a comprar
 

@@ -29,10 +29,11 @@ public class CategoriaComplemento : MonoBehaviour {
 		Vector3 posicionActual = buttonsHelpers [0].transform.position;
 
 		for (int i = 0; i < numBotones; i++){
-			Debug.Log ("instancio " + "button");
+//			Debug.Log ("instancio " + "button");
 			GameObject newButton = Instantiate (button);
 			newButton.transform.SetParent(buttonsHolder.transform, false);
 			newButton.transform.position = posicionActual;
+			newButton.GetComponent<BotonComplemento>().categoria = this;
 			//Image imagen = newButton.GetComponent<Image>();
 			//imagen.material.mainTexture = prueba;
 
