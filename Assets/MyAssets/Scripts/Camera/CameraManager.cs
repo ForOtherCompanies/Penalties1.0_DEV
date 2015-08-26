@@ -80,7 +80,10 @@ public class CameraManager : MonoBehaviour {
 		target= Quaternion.Euler (40, 180, 0);
 		targetPosition = objetivo.position;
 	}
-	void activarCamara(){
+	public void activarCamara(){
 		camara.enabled = true;
+	}
+	public void DesactivarCamara(){
+		camara.enabled = false;
 	}
 }
