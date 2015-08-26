@@ -60,6 +60,17 @@ public class CameraManager : MonoBehaviour {
 		target =  Quaternion.Euler (30, 270, 0);
 		targetPosition = objetivo.position;
 	}
+	public void MoverVestuario(){
+		camara.enabled = false;
+		camara = camaras [3];
+		objetivo = objetivos [3];
+		mover = true;
+		rotar = true;
+		target =  Quaternion.Euler (40, 180, 0);
+		targetPosition = objetivo.position;
+	}
+
+
 	public void MoverInicio(){
 		camara.enabled = false;
 		objetivo = objetivos [0];
@@ -69,7 +80,10 @@ public class CameraManager : MonoBehaviour {
 		target= Quaternion.Euler (40, 180, 0);
 		targetPosition = objetivo.position;
 	}
-	void activarCamara(){
+	public void activarCamara(){
 		camara.enabled = true;
+	}
+	public void DesactivarCamara(){
+		camara.enabled = false;
 	}
 }
