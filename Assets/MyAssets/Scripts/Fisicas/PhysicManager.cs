@@ -19,7 +19,7 @@ public class PhysicManager : MonoBehaviour {
 		transform.rotation = posicion.transform.rotation;
 		rb.velocity = Vector3.zero;
 		rb.angularVelocity = Vector3.zero;
-		rb.isKinematic = true;
+		//rb.isKinematic = true;
 	}
 
 }

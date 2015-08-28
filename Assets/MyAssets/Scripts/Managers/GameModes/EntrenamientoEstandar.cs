@@ -3,6 +3,7 @@ using System.Collections;
 
 public class EntrenamientoEstandar : ModoPenalties
 {
+
 	protected override void InicioFase ()
 	{
 		if (fase < 5) {
@@ -14,8 +15,10 @@ public class EntrenamientoEstandar : ModoPenalties
 			}
 			ColocarCamara ();
 			input.enabled = true;
-			reset();
+			reset ();
 			EmpezarContador ();
+		} else {
+			//volver al menu;
 		}
 	}
 	public  void Update ()

@@ -12,9 +12,9 @@ public class EntrenamientoDianas : ModoPenalties
 	private static float MaxY = 1.6f;
 	private static float Z = 11.0f;
 
-	public override void Start ()
+	public override void OnEnable ()
 	{
-		base.Start ();
+		base.OnEnable ();
 		PjPortero.gameObject.SetActive (false);
 		CrearDiana ();
 	}
