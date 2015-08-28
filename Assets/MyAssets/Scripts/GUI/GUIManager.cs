@@ -10,19 +10,17 @@ public class GUIManager : MonoBehaviour {
 	public Canvas mainMenuCanvas;
 	public Canvas trainingCanvas;
 	//reference to gameModeManager
-	public Canvas multiplayerCanvas;
-	public Canvas vestuarioCanvas;
 	public GameModeManager gameModeManager;
 
 	//set private
 	public Canvas currentCanvas;
-	/*
+
 	void Start (){
 		mainMenuCanvas.enabled = true;
 		trainingCanvas.enabled = false;
 	}
-	*/
 
+	
 	public void moverEntrenamiento(){
 		cameraManager.MoverEntrenamiento ();
 
@@ -32,37 +30,16 @@ public class GUIManager : MonoBehaviour {
 		gameModeManager.DisableCurrentMode();
 		currentCanvas.enabled = false;
 		currentCanvas = mainMenuCanvas;
-		cameraManager.MoverInicio();
+
 		currentCanvas.enabled = true;
 	}
-
-
 
 	public void GoToTrainingMenu(){
 		currentCanvas.enabled = false;
 		currentCanvas = trainingCanvas;
 		currentCanvas.enabled = true;
-		cameraManager.MoverEntrenamiento ();
 
 	}
-
-	
-	public void GoToMultiPlayerMenu(){
-		currentCanvas.enabled = false;
-		currentCanvas = multiplayerCanvas;
-		currentCanvas.enabled = true;
-		cameraManager.MoverMultijugador ();
-		
-	}
-
-	public void GoToVestuarioMenu(){
-		currentCanvas.enabled = false;
-		currentCanvas = vestuarioCanvas;
-		currentCanvas.enabled = true;
-		cameraManager.MoverVestuario ();
-		
-	}
-
 
 	public void JumpToStandardTrainingMode(){
 		gameModeManager.ActivateEntrenamientoEstandar ();
