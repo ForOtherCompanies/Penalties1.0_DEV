@@ -15,7 +15,8 @@ public class GameModeManager : MonoBehaviour {
 	public EntrenamientoDianas entrenamientoDianas;
 	public EntrenamientoEstandar entrenamientoEstandar;
 	public EntrenamientoParadas entrenamientoParadas;
-
+	//game objects necesarios
+	public PelotaGameRules pelotaRules;
 
 	//to set private
 	public GameModeVirtual currentGameMode;
@@ -38,6 +39,8 @@ public class GameModeManager : MonoBehaviour {
 		DisableCurrentMode();
 		currentGameMode = entrenamientoEstandar;
 		currentGameMode.enabled = true;
+
+		pelotaRules.currentGameMode = currentGameMode;
 		
 	}
 
@@ -45,6 +48,8 @@ public class GameModeManager : MonoBehaviour {
 		DisableCurrentMode();
 		currentGameMode = entrenamientoParadas;
 		currentGameMode.enabled = true;
+
+
 		
 	}
 

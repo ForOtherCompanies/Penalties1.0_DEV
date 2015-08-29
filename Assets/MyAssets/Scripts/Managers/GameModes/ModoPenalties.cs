@@ -55,6 +55,8 @@ public class ModoPenalties : GameModeVirtual
 		EmpezarContador ();
 		accionRealizada = false;
 		pelota.reiniciar ();
+
+
 	}
 
 	protected virtual void EsperarJugador ()
@@ -98,7 +100,7 @@ public class ModoPenalties : GameModeVirtual
 	protected virtual void AccionesIA ()
 	{
 		if (accionIA) {
-			Debug.Log (contadorIA);
+			//Debug.Log (contadorIA);
 			contadorIA += Time.deltaTime;
 			if (rolActual == ModoJuego.Tirador && contadorIA > tiempoParada) {
 				iaPortero.RealizarAccion ();
