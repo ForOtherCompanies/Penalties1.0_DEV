@@ -5,6 +5,7 @@ public class EntrenamientoDianas : ModoPenalties
 {
 	public GameObject diana;
 	public GameObject PjPortero;
+
 	private GameObject dianaClon;
 	private static float MinX = -7.2f;
 	private static float MaxX = 0.56f;
