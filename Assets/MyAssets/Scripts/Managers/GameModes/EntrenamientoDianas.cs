@@ -5,6 +5,7 @@ public class EntrenamientoDianas : ModoPenalties
 {
 	public GameObject diana;
 	public GameObject PjPortero;
+
 	private GameObject dianaClon;
 	private static float MinX = -7.2f;
 	private static float MaxX = 0.56f;
@@ -12,9 +13,9 @@ public class EntrenamientoDianas : ModoPenalties
 	private static float MaxY = 1.6f;
 	private static float Z = 11.0f;
 
-	public override void Start ()
+	public override void OnEnable ()
 	{
-		base.Start ();
+		base.OnEnable ();
 		PjPortero.gameObject.SetActive (false);
 		CrearDiana ();
 	}

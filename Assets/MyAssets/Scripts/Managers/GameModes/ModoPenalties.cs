@@ -1,12 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
 //esta es para funcionar como VIRTUAL tambien
-public class ModoPenalties : GameModeVirtual {
+public class ModoPenalties : GameModeVirtual
+{
 	//aqui van variables para saber el estado del juego (p.ej. si estamos en modo portero o tirador... y para
 	//tambien es responasbildad de este manager alternar entre ellos. De momento solo tenemos el tiro a puerta
-	public enum ModoJuego{Tirador, Portero};
+	public enum ModoJuego
+	{
+		Tirador,
+		Portero}
+	;
 	
 	//keepPublic
 	public GameObject mainCamera;
@@ -33,16 +37,13 @@ public class ModoPenalties : GameModeVirtual {
 	//// variables para el portero
 	private Vector3 direccionSalto;
 	private float fuerzaSalto;
-	
 	private bool esperaTiro;
-	public bool accionRealizada;
+	private bool accionRealizada;
 	private float tiempoParada = 0.5f;
 	private float tiempoEntreFases = 3f;
-	private float tiempoIATiro = 2.5f;
+	private float tiempoIATiro = 3f;
 	private float contadorIA = 0;
 	private float contadorCambioFase = 0;
-	
-	
 
 	public virtual void OnEnable ()
 	{
@@ -53,62 +54,62 @@ public class ModoPenalties : GameModeVirtual {
 		input.enabled = true;
 		EmpezarContador ();
 		accionRealizada = false;
-		pelota.reiniciar();
-	}
-	//debera desaparecer luego sera solo el OnEnable
-	public virtual void Start(){
-		timer = 10;
-		rolActual = ModoJuego.Tirador;
-		fase = 0;
-		ColocarCamara ();
-		input.enabled = true;
-		EmpezarContador ();
-		accionRealizada = false;
+		pelota.reiniciar ();
+
+
 	}
 
-	protected virtual void EsperarJugador (){
-		if(accionRealizada)
-//			Debug.Log ("No tengo que continuar");
-		if (esperaTiro) {
-			contador += Time.deltaTime;
-//			Debug.Log(contador);
-			if (contador > timer) {
-					Debug.Log(contador);
-					Debug.Log ("No tengo que tirar");
-				iaTiro.RealizarAccion();
-				accionIA = true;
-				esperaTiro = false;
-				accionRealizada = true;
+	protected virtual void EsperarJugador ()
+	{
+		if (!accionRealizada) {
+			if (esperaTiro) {
+				contador += Time.deltaTime;
+				if (contador > timer) {
+					iaTiro.RealizarAccion ();
+					accionIA = true;
+					esperaTiro = false;
+					accionRealizada = true;
+				}
+			}
+			if (rolActual == ModoJuego.Portero) {
+				if(!accionIA){
+					contador+=Time.deltaTime;
+					if(contador > 1.5){
+						accionRealizada = true;
+					}
+				}
 			}
 		}
 	}
 
-	protected virtual void AccionesRealizadas(){
+	protected virtual void AccionesRealizadas ()
+	{
 		if (accionRealizada) {
-			contadorCambioFase+=Time.deltaTime;
+			contadorCambioFase += Time.deltaTime;
 			//para sincronizar con el fade in/out
-			if (contadorCambioFase > tiempoEntreFases-1)
-				cameraEffects.IniciarCicloOutIn();
+			if (contadorCambioFase > tiempoEntreFases - 1)
+				cameraEffects.IniciarCicloOutIn ();
 			
-			if(contadorCambioFase>tiempoEntreFases){
+			if (contadorCambioFase > tiempoEntreFases) {
 				accionRealizada = false;
 				InicioFase ();
 			}
 		}
 	}
 
-
-	protected virtual void AccionesIA(){
+	protected virtual void AccionesIA ()
+	{
 		if (accionIA) {
-			contadorIA+=Time.deltaTime;
-			if(rolActual==ModoJuego.Tirador && contadorIA>tiempoParada){
-				iaPortero.RealizarAccion();
-				accionIA= false;
+			//Debug.Log (contadorIA);
+			contadorIA += Time.deltaTime;
+			if (rolActual == ModoJuego.Tirador && contadorIA > tiempoParada) {
+				iaPortero.RealizarAccion ();
+				accionIA = false;
 			}
-			if(rolActual == ModoJuego.Portero &&contadorIA>tiempoIATiro){
-				accionRealizada = true;
-				iaTiro.RealizarAccion();
-				accionIA= false;
+			if (rolActual == ModoJuego.Portero && contadorIA > tiempoIATiro) {
+				//accionRealizada = true;
+				iaTiro.RealizarAccion ();
+				accionIA = false;
 			}
 		}
 	}
@@ -123,15 +124,18 @@ public class ModoPenalties : GameModeVirtual {
 			esperaTiro = true;
 		} else {
 			accionIA = true; 
+			esperaTiro = false;
 		}
 	}
 
 	protected virtual void InicioFase ()
-	{}
+	{
+	}
 	
 	
 	//funciona
-	protected void ColocarCamara(){
+	protected void ColocarCamara ()
+	{
 		
 		//cameraEffects.IniciarCicloOutIn();
 		
@@ -146,9 +150,9 @@ public class ModoPenalties : GameModeVirtual {
 		}
 	}
 	
-	
-	protected void reset(){
-		pelota.reiniciar();
+	protected void reset ()
+	{
+		pelota.reiniciar ();
 		portero.reiniciar ();
 	}
 
@@ -156,23 +160,22 @@ public class ModoPenalties : GameModeVirtual {
 	{
 		//if 'estamos como delantero y todo esta correcto para lanzar'
 		////then pelota.fisicas.Lanzar (inicio, fin,fuerza);
-		if (rolActual == ModoJuego.Tirador){
+		if (rolActual == ModoJuego.Tirador) {
 			if (PrepararLanzamiento (inicioTouch, destinoTouch)) {
 				//pelota.lanzamiento se lanzara desde la animacion del player tirando para que coincida con el momento justo
 				////desde aqui lo que habra que hacer es poner la animacion en 'play'
 				pelota.Lanzamiento (direccionTiro, fuerzaTiro);
+				accionIA = true;
 			}
 		}
 		
-		if (rolActual == ModoJuego.Portero){
+		if (rolActual == ModoJuego.Portero) {
 			PrepararSaltoPortero (inicioTouch, destinoTouch);
 			portero.Saltar (direccionSalto, fuerzaSalto);
 		}
 		esperaTiro = false;
 		accionRealizada = true;
 		input.enabled = false;
-		if(accionRealizada)
-		Debug.Log ("accion realizada");
 	}
 
 	//nos tiene que devolver el vector direccion y la fuerza del lanzamiento.
@@ -181,7 +184,7 @@ public class ModoPenalties : GameModeVirtual {
 	{
 		
 		RaycastHit hit;
-		Ray ray = mainCamera.GetComponent<Camera>().ScreenPointToRay (fin);
+		Ray ray = mainCamera.GetComponent<Camera> ().ScreenPointToRay (fin);
 		
 		if (Physics.Raycast (ray, out hit, 500)) {
 			if (hit.transform.tag == "RaycastReactor") {
@@ -201,8 +204,9 @@ public class ModoPenalties : GameModeVirtual {
 		
 	}
 	
-	void PrepararSaltoPortero(Vector2 inicio, Vector2 fin){
-		Vector3 vectorSalto = fin-inicio;
+	void PrepararSaltoPortero (Vector2 inicio, Vector2 fin)
+	{
+		Vector3 vectorSalto = fin - inicio;
 		
 		//si la potencia del salto es demasiado grande se clampea a 150
 		if (vectorSalto.magnitude > 150)
@@ -211,6 +215,6 @@ public class ModoPenalties : GameModeVirtual {
 		//partimos el vector en direccion+magnitud para mandarselo al script de fisicas del portero
 		fuerzaSalto = vectorSalto.magnitude;
 		direccionSalto = vectorSalto.normalized;
-		
+		direccionSalto.x *= (-1);
 	}
 }
