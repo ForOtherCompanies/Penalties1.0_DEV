@@ -47,4 +47,7 @@ public class InputEffects : MonoBehaviour
 		i = 0;
 		this.enabled = false;
 	}
+	public void iniciar(){
+		this.enabled = true;
+	}
 }
