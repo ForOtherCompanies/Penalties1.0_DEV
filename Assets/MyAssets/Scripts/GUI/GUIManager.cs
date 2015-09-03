@@ -10,8 +10,6 @@ public class GUIManager : MonoBehaviour {
 	public Canvas mainMenuCanvas;
 	public Canvas trainingCanvas;
 	public Canvas finRondaCanvas;
-	public Canvas multiplayerCanvas;
-	public Canvas vestuarioCanvas;
 	public Canvas tanteoEstandar;
 	//reference to gameModeManager
 	public GameModeManager gameModeManager;
@@ -51,52 +49,19 @@ public class GUIManager : MonoBehaviour {
 		currentCanvas.enabled = false;
 		currentCanvas = trainingCanvas;
 		currentCanvas.enabled = true;
-		
-		goBackReference = mainMenuCanvas;
-		
-	}	
-	public void GoToMultiplayerMenu(){
-		currentCanvas.enabled = false;
-		currentCanvas = multiplayerCanvas;
-		currentCanvas.enabled = true;
-		
-		goBackReference = mainMenuCanvas;
-		
-	}
-	public void GoToVestuarioMenu(){
-		currentCanvas.enabled = false;
-		currentCanvas = vestuarioCanvas;
-		currentCanvas.enabled = true;
-		
-		goBackReference = mainMenuCanvas;
-		
-	}
 
+		goBackReference = mainMenuCanvas;
+
+	}
 
 	public void JumpToStandardTrainingMode(){
 		gameModeManager.ActivateEntrenamientoEstandar ();
 
 		currentCanvas.enabled = false;
 		tanteoEstandar.enabled = true;
-		goBackReference = trainingCanvas;
+		//y activar tambien un 'GoBackCanvas' para volver al menu principal que sera comun a todos
+		//los modos. El tipico boton de X para salir
 
-	}
-
-	public void JumpToDianaTrainingMode(){
-		gameModeManager.ActivateEntrenamientoDianas ();
-		
-		currentCanvas.enabled = false;
-		tanteoEstandar.enabled = true;
-		goBackReference = trainingCanvas;
-		
-	}
-	public void JumpToGKeeperTrainingMode(){
-		gameModeManager.ActivateEntrenamientoParadas ();
-		
-		currentCanvas.enabled = false;
-		tanteoEstandar.enabled = true;
-		goBackReference = trainingCanvas;
-		
 	}
 
 	private void DisableAuxiliarCanvases(){

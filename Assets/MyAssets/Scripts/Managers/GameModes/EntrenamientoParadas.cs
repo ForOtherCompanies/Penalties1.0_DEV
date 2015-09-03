@@ -10,7 +10,16 @@ public class EntrenamientoParadas : ModoPenalties {
 		input.enabled = true;
 		EmpezarContador ();
 	}
-
+	/*
+	public override void Start ()
+	{	timer = 10;
+		rolActual = ModoJuego.Portero;
+		fase = 0;
+		ColocarCamara ();
+		input.enabled = true;
+		EmpezarContador ();
+	}
+*/
 	protected override void InicioFase ()
 	{
 		if (fase<10) {
