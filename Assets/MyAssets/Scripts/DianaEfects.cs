@@ -5,7 +5,7 @@ public class DianaEfects : MonoBehaviour {
 		GameObject particleEffects;
 
 		public void Start(){
-			particleEffects = GameObject.FindGameObjectsWithTag ("Particles");	
+			particleEffects = GameObject.FindGameObjectWithTag ("Particles");	
 			particleEffects.GetComponent<ParticleSystem>().Stop();
 			particleEffects.transform.position = transform.position;
 
