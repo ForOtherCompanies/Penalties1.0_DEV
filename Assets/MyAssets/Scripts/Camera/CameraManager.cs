@@ -45,40 +45,48 @@ public class CameraManager : MonoBehaviour {
 		camara.enabled = false;
 		objetivo = objetivos [1];
 		camara = camaras [1];
-		mover = true;
+		/*mover = true;
 		rotar = true;
 		target =  Quaternion.Euler (25, 0, 0);
 		targetPosition = objetivo.position;
+		*/
+		activarCamara ();
 	}
 
 	public void MoverMultijugador(){
 		camara.enabled = false;
 		objetivo = objetivos [2];
 		camara = camaras [2];
-		mover = true;
+		/*mover = true;
 		rotar = true;
 		target =  Quaternion.Euler (30, 270, 0);
 		targetPosition = objetivo.position;
+	*/
+		activarCamara ();
 	}
 	public void MoverVestuario(){
 		camara.enabled = false;
 		camara = camaras [3];
-		objetivo = objetivos [3];
+		objetivo = objetivos [3];/*
 		mover = true;
 		rotar = true;
 		target =  Quaternion.Euler (40, 180, 0);
 		targetPosition = objetivo.position;
+		*/
+			activarCamara ();
 	}
 
 
 	public void MoverInicio(){
 		camara.enabled = false;
 		objetivo = objetivos [0];
-		camara = camaras [0];
+		camara = camaras [0];/*
 		mover = true;
 		rotar = true;
 		target= Quaternion.Euler (40, 180, 0);
 		targetPosition = objetivo.position;
+			*/
+		activarCamara ();
 	}
 	public void activarCamara(){
 		camara.enabled = true;
