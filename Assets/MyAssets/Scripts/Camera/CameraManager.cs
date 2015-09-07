@@ -6,92 +6,74 @@ public class CameraManager : MonoBehaviour {
 	//keep public
 	public GUIManager guiManager;
 	public Camera [] camaras;
-	public Transform [] objetivos;
 	//keep private
-	private float smoothTime = 0.3F;
-	private Transform objetivo;
-	private Vector3 velocity = Vector3.zero;
-	private float smooth = 2.0F;
-	private bool mover = false;
 	private Camera camara;
-	private bool rotar= false;
-	private Quaternion target;
-	private Vector3 targetPosition;
+	private Camera lastCamara;
+	private Animator animacion;
+	private int last;
+
 
 	void Start(){
 		camara = camaras [0];
+		animacion = GetComponent<Animator> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (mover) {
-
-			transform.position = Vector3.SmoothDamp (transform.position, targetPosition, ref velocity, smoothTime);
-			if(transform.position == objetivo.position){
-				mover = false;
-				activarCamara();
-			}
-		}
-		if (rotar) {
-			transform.rotation = Quaternion.Slerp (transform.rotation, target, Time.deltaTime * smooth);
-			if(transform.rotation== target){
-				rotar = false;
-			}
-		}
 
 	}
 
 	public void MoverEntrenamiento(){
-		camara.enabled = false;
-		objetivo = objetivos [1];
+		lastCamara = camara;
 		camara = camaras [1];
-		/*mover = true;
-		rotar = true;
-		target =  Quaternion.Euler (25, 0, 0);
-		targetPosition = objetivo.position;
-		*/
-		activarCamara ();
+		last = 1;
+		animacion.SetBool ("Main", false);
+		animacion.SetBool ("Entrenar", true);
 	}
 
 	public void MoverMultijugador(){
+		lastCamara = camara;
 		camara.enabled = false;
-		objetivo = objetivos [2];
 		camara = camaras [2];
-		/*mover = true;
-		rotar = true;
-		target =  Quaternion.Euler (30, 270, 0);
-		targetPosition = objetivo.position;
-	*/
-		activarCamara ();
+		last = 2;
+		animacion.SetBool ("Main", false);
+		animacion.SetBool ("Multiplayer", true);
 	}
 	public void MoverVestuario(){
-		camara.enabled = false;
+		lastCamara = camara;
 		camara = camaras [3];
-		objetivo = objetivos [3];/*
-		mover = true;
-		rotar = true;
-		target =  Quaternion.Euler (40, 180, 0);
-		targetPosition = objetivo.position;
-		*/
-			activarCamara ();
+		last = 3;
+		animacion.SetBool ("Main", false);
+		animacion.SetBool ("Vestuario", true);
 	}
 
 
 	public void MoverInicio(){
-		camara.enabled = false;
-		objetivo = objetivos [0];
-		camara = camaras [0];/*
-		mover = true;
-		rotar = true;
-		target= Quaternion.Euler (40, 180, 0);
-		targetPosition = objetivo.position;
-			*/
-		activarCamara ();
+		lastCamara = camara;
+		camara = camaras [0];
+		switch (last) {
+		case 1:
+			animacion.SetBool ("Entrenar", false);
+			break;
+		case 2:
+			animacion.SetBool ("Multiplayer", false);
+			break;
+		case 3:
+			animacion.SetBool ("Vestuario", false);
+			break;
+		}
+		last = 0;
 	}
+
+	public void BackToMain(){
+		animacion.SetBool ("Main", true);
+	}
+
+
 	public void activarCamara(){
 		camara.enabled = true;
 	}
 	public void DesactivarCamara(){
-		camara.enabled = false;
+		lastCamara.enabled = false;
 	}
 }
