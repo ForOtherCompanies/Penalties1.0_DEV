@@ -25,12 +25,12 @@ public class GUIManager : MonoBehaviour {
 		finRondaCanvas.enabled = false;
 	}
 
-	
+/*	
 	public void moverEntrenamiento(){
 		cameraManager.MoverEntrenamiento ();
 
 	}
-
+*/
 	//vuelve al main o al apuntado por goBackReference
 	public void BackToMainMenu(){ 
 		gameModeManager.DisableCurrentMode();
@@ -53,6 +53,8 @@ public class GUIManager : MonoBehaviour {
 		currentCanvas.enabled = true;
 		
 		goBackReference = mainMenuCanvas;
+
+		cameraManager.MoverEntrenamiento ();
 		
 	}	
 	public void GoToMultiplayerMenu(){
