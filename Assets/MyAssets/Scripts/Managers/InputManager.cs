@@ -23,10 +23,11 @@ public class InputManager : MonoBehaviour {
 
 		if (Input.touchCount>0){
 			myTouch = Input.GetTouch (0);
+
 			//al inicio del touch guardar la posicion
 			if (myTouch.phase ==TouchPhase.Began){
 				inicioTouch = myTouch.position;
-
+				inputEffects.iniciar();
 			}
 
 			//al final del touch guaradr la posicion y llamar a la funcion que calcula el tiro pasando los parametros

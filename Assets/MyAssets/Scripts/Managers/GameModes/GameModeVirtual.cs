@@ -7,4 +7,9 @@ public class GameModeVirtual : MonoBehaviour {
 	virtual public void RealizarAcciones (Vector2 inicioTouch, Vector3 destinoTouch)
 	{
 	}
+
+	virtual public void PuntoConseguido () {
+
+		Debug.Log ("GOL SUMADO");
+	}
 }
