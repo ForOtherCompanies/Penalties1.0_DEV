@@ -2,114 +2,81 @@
 using System.Collections;
 
 public class GUIManager : MonoBehaviour {
-	public CameraManager cameraManager;
 
 	//keep public
-	//pointers to each canvas
-	public Canvas goBackCanvas;
-	public Canvas mainMenuCanvas;
-	public Canvas trainingCanvas;
-	public Canvas finRondaCanvas;
-	public Canvas multiplayerCanvas;
-	public Canvas vestuarioCanvas;
-	public Canvas tanteoEstandar;
-	//reference to gameModeManager
-	public GameModeManager gameModeManager;
+		//pointers to each canvas try to convert into an array
+		public Canvas goBackCanvas;//delete
+		public Canvas mainMenuCanvas;
+		public Canvas trainingCanvas;
+		public Canvas finRondaCanvas;
+		public Canvas multiplayerCanvas;
+		public Canvas vestuarioCanvas;
+		public Canvas tanteoEstandar;
+		//reference to others Manager
+		public GameModeManager gameModeManager;
+		public CameraManager cameraManager;
 
 	//set private
-	public Canvas currentCanvas;
-	public Canvas goBackReference = null; //apuntador al menu que hay que activar en caso de pulsar el boton GoBack
+		private Canvas currentCanvas;
+		private Canvas goBackReference = null; //apuntador al menu que hay que activar en caso de pulsar el boton GoBack
+
+
 	void Start (){
-		mainMenuCanvas.enabled = true;
-		trainingCanvas.enabled = false;
-		finRondaCanvas.enabled = false;
+		goBackReference = mainMenuCanvas;
+		currentCanvas = mainMenuCanvas;
 	}
-
-/*	
-	public void moverEntrenamiento(){
-		cameraManager.MoverEntrenamiento ();
-
-	}
-*/
+	
 	//vuelve al main o al apuntado por goBackReference
 	public void BackToMainMenu(){ 
 		gameModeManager.DisableCurrentMode();
-		currentCanvas.enabled = false;
-		if (goBackReference != null)
-			currentCanvas = goBackReference;
-		else
-			currentCanvas = mainMenuCanvas;
-
-		currentCanvas.enabled = true;
-		goBackReference = null;
-		gameModeManager.currentGameMode = null;
-
+		ProtocoloCambioCanvas (goBackReference, currentCanvas);
 		DisableAuxiliarCanvases();
+		cameraManager.MoverInicio ();
 	}
 
 	public void GoToTrainingMenu(){
-		currentCanvas.enabled = false;
-		currentCanvas = trainingCanvas;
-		currentCanvas.enabled = true;
-		
-		goBackReference = mainMenuCanvas;
 
+		ProtocoloCambioCanvas (trainingCanvas, mainMenuCanvas);
 		cameraManager.MoverEntrenamiento ();
 		
 	}	
 	public void GoToMultiplayerMenu(){
-		currentCanvas.enabled = false;
-		currentCanvas = multiplayerCanvas;
-		currentCanvas.enabled = true;
 		
-		goBackReference = mainMenuCanvas;
+		ProtocoloCambioCanvas (multiplayerCanvas, mainMenuCanvas);
+		cameraManager.MoverMultijugador ();
+
 		
 	}
 	public void GoToVestuarioMenu(){
-		currentCanvas.enabled = false;
-		currentCanvas = vestuarioCanvas;
-		currentCanvas.enabled = true;
-		
-		goBackReference = mainMenuCanvas;
-		
+
+		ProtocoloCambioCanvas (vestuarioCanvas, mainMenuCanvas);
+		cameraManager.MoverVestuario ();
 	}
 
 
 	public void JumpToStandardTrainingMode(){
+		
+		ProtocoloCambioCanvas (tanteoEstandar, trainingCanvas);
 		gameModeManager.ActivateEntrenamientoEstandar ();
-
-		currentCanvas.enabled = false;
-		tanteoEstandar.enabled = true;
-		goBackReference = trainingCanvas;
-
 	}
 
 	public void JumpToDianaTrainingMode(){
+
+		ProtocoloCambioCanvas (tanteoEstandar, trainingCanvas);
 		gameModeManager.ActivateEntrenamientoDianas ();
-		
-		currentCanvas.enabled = false;
-		tanteoEstandar.enabled = true;
-		goBackReference = trainingCanvas;
-		
 	}
 	public void JumpToGKeeperTrainingMode(){
+
+		ProtocoloCambioCanvas (tanteoEstandar, trainingCanvas);
 		gameModeManager.ActivateEntrenamientoParadas ();
-		
-		currentCanvas.enabled = false;
-		tanteoEstandar.enabled = true;
-		goBackReference = trainingCanvas;
-		
 	}
 
 	private void DisableAuxiliarCanvases(){
 		tanteoEstandar.enabled = false;
 	}
-/*
-	public void MoverInicio(){
-		cameraManager.MoverInicio ();
+
+	private void ProtocoloCambioCanvas(Canvas  canvasDestino, Canvas canvasOrigen) {
+		currentCanvas = canvasDestino;
+		goBackReference = canvasOrigen;
 	}
-	public void moverMultijugador(){
-		cameraManager.MoverMultijugador ();
-	}
-*/
 }
