@@ -20,30 +20,33 @@ public class CategoriaComplemento : MonoBehaviour {
 	public GameObject [] objetos; //public arraylist de objetos (estos seran los punteros a los elemtos para colocar en el player)
 	////cada prefab tipo 'complemento' debe colgar de un holder para mover el holder a la posicion del helper y luego recolocar el objeto en su
 	////sitio desde unity. OJO con la normalizacion de posiciones que puede ser un jaleo
-
+	public Vector3 posicionActual;
 
 
 	public void Start (){
 		float incrementoX = buttonsHelpers [1].transform.position.x - buttonsHelpers [0].transform.position.x;
 		float incrementoY = buttonsHelpers [2].transform.position.y - buttonsHelpers [0].transform.position.y; 
-		Vector3 posicionActual = buttonsHelpers [0].transform.position;
+		posicionActual = buttonsHelpers [0].transform.position;
 
 		for (int i = 0; i < numBotones; i++){
-//			Debug.Log ("instancio " + "button");
+			Debug.Log ("instancio " + posicionActual);
 			GameObject newButton = Instantiate (button);
 			newButton.transform.SetParent(buttonsHolder.transform, false);
+			
 			newButton.transform.position = posicionActual;
-			newButton.GetComponent<BotonComplemento>().categoria = this;
+			//newButton.GetComponent<BotonComplemento>().categoria = this;
 			//Image imagen = newButton.GetComponent<Image>();
 			//imagen.material.mainTexture = prueba;
 
-			if((i+1)%3==0){
+			if((i)%3==2){
 				posicionActual.y+=incrementoY;
 				posicionActual.x-=2*incrementoX;
 			}else{
 				posicionActual.x+=incrementoX;
 			}
+
 		}
+
 		//primero se instancian todos los botones y se colocan en su sitio y tal.
 
 

@@ -5,7 +5,6 @@ public class GUIManager : MonoBehaviour {
 
 	//keep public
 		//pointers to each canvas try to convert into an array
-		public Canvas goBackCanvas;//delete
 		public Canvas mainMenuCanvas;
 		public Canvas trainingCanvas;
 		public Canvas finRondaCanvas;
@@ -18,7 +17,7 @@ public class GUIManager : MonoBehaviour {
 
 	//set private
 		private Canvas currentCanvas;
-		private Canvas goBackReference = null; //apuntador al menu que hay que activar en caso de pulsar el boton GoBack
+		private Canvas goBackReference; //apuntador al menu que hay que activar en caso de pulsar el boton GoBack
 
 
 	void Start (){
@@ -76,7 +75,9 @@ public class GUIManager : MonoBehaviour {
 	}
 
 	private void ProtocoloCambioCanvas(Canvas  canvasDestino, Canvas canvasOrigen) {
+		currentCanvas.enabled = false;
 		currentCanvas = canvasDestino;
+		currentCanvas.enabled = true;
 		goBackReference = canvasOrigen;
 	}
 }
