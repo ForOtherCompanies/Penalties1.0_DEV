@@ -80,4 +80,8 @@ public class GUIManager : MonoBehaviour {
 		currentCanvas.enabled = true;
 		goBackReference = canvasOrigen;
 	}
+
+	public void Iniciar(){
+		currentCanvas.enabled = true;
+	}
 }
