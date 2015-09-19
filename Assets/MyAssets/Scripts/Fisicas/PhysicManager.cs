@@ -21,6 +21,13 @@ public class PhysicManager : MonoBehaviour {
 		rb.angularVelocity = Vector3.zero;
 		//rb.isKinematic = true;
 	}
+	virtual public void EnviarMensaje(){
+		MPmanager.Instance.SendMyUpdate (rb.position, rb.velocity);
+	}
+	virtual public void ActualizarEstado(Vector3 posicion, Vector3 velocidad){
+		rb.position = posicion;
+		rb.velocity = velocidad;
+	}
 
 }
 

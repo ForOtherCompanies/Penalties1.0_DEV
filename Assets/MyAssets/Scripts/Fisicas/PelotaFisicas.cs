@@ -27,12 +27,6 @@ public class PelotaFisicas : PhysicManager {
 		efecto = Vector3.zero;
 	}
 	void FixedUpdate() {
-
-
-
-		//if (rb.isKinematic==false)
-			//Debug.Log ("UPDATE_EFECTO = "+ recibiendoEfecto);
-		//Debug.Log (recibiendoEfecto);
 		if (recibiendoEfecto){
 			if (!tiroIA)
 				efecto = CalcularEfectoGyro(rotationHelper.transform.eulerAngles.z);
@@ -42,32 +36,7 @@ public class PelotaFisicas : PhysicManager {
 					
 				}	
 			rb.AddForce (efecto, ForceMode.Force);
-
 		}
-/*
-		if (efectoIA) {
-			rb.AddForce (Vector3.left *fuerzaEfecto, ForceMode.Force);
-		}
-*/
-
-
-		//TODO
-		//añadir:
-		//// poner el drag a 0.8 mientras este rodando por una superficie
-		///  si no esta rodando ponemos el drag a 0
-		///  si llega a un umbral minimo de rotacion (anoh gularVelocity) la paramos
-/*
-		if (Input.GetKeyDown("space")){
-			rb.angularDrag = 0.8F;
-			control = true;
-			//Debug.Log ("frenando");
-		}
-
-		if (rb.angularVelocity.z < 1.5 && control){
-			rb.angularDrag = 20f;
-			//Debug.Log ("##PASA##");
-		}
-*/
 	}
 
 	public override void AccionIA(Vector3 direccion,float fuerza,int level){

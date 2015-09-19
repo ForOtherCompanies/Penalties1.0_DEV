@@ -21,4 +21,5 @@ public class PorteroFisicas : PhysicManager{
 	public void Saltar(Vector3 direccion, float fuerza){
 		rb.AddForce (direccion * fuerza*2);
 	}
+
 }

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using System.Collections.Generic;
 
 using GooglePlayGames;
 using GooglePlayGames.BasicApi.Multiplayer;
@@ -11,6 +11,14 @@ public class MPmanager : RealTimeMultiplayerListener {
 	private uint maximumOpponents = 1;
 	private uint gameVariation = 0;
 	public MPLobbyListener LobbyListener;
+	public GameModeManager modoJuego;
+	public MPUpdateListener updateListener;
+
+	private byte _protocolVersion = 1;
+	// Byte + Byte + 2 floats for position + 2 floats for velcocity + 1 float for rotZ
+	//cada float es 4 bytes
+	private int _updateMessageLength = 26;
+	private List<byte> _updateMessage;
 
 	public static MPmanager Instance {
 		get {
@@ -22,6 +30,8 @@ public class MPmanager : RealTimeMultiplayerListener {
 	}
 
 	private MPmanager() {
+		_updateMessage = new List<byte>(_updateMessageLength);
+	
 		PlayGamesPlatform.DebugLogEnabled = true;
 		PlayGamesPlatform.Activate ();
 	}
@@ -56,6 +66,10 @@ public class MPmanager : RealTimeMultiplayerListener {
 		}
 	}
 
+	public void ComenzarMultiPlayer(){
+		StartMatchMaking ();
+	}
+
 	public void SignOut() {
 		PlayGamesPlatform.Instance.SignOut ();
 	}
@@ -65,6 +79,7 @@ public class MPmanager : RealTimeMultiplayerListener {
 	}
 
 	private void StartMatchMaking() {
+		LobbyListener.ShowLobby ();
 		PlayGamesPlatform.Instance.RealTime.CreateQuickGame (minimumOpponents, maximumOpponents, gameVariation, this);
 	}
 	
@@ -78,7 +93,7 @@ public class MPmanager : RealTimeMultiplayerListener {
 		if (success) {
 			LobbyListener.HideLobby();
 			LobbyListener = null;
-			Application.LoadLevel("MainGame");
+			modoJuego.ActivateMultplayer();
 			ShowMPStatus ("We are connected to the room! I would probably start our game now.");
 		} else {
 			ShowMPStatus ("Uh-oh. Encountered some error connecting to the room.");
@@ -106,7 +121,27 @@ public class MPmanager : RealTimeMultiplayerListener {
 	
 	public void OnRealTimeMessageReceived (bool isReliable, string senderId, byte[] data)
 	{
-		ShowMPStatus ("We have received some gameplay messages from participant ID:" + senderId);
+		// We'll be doing more with this later...
+		byte messageVersion = (byte)data[0];
+		// Let's figure out what type of message this is.
+		char messageType = (char)data[1];
+		Vector3 posicion, velocidad;
+		if (messageType == 'U' && data.Length == _updateMessageLength) { 
+			float posX = System.BitConverter.ToSingle(data, 2);
+			float posY = System.BitConverter.ToSingle(data, 6);
+			float posZ = System.BitConverter.ToSingle(data, 10);
+			float velX = System.BitConverter.ToSingle(data, 14);
+			float velY = System.BitConverter.ToSingle(data, 18);
+			float velZ = System.BitConverter.ToSingle(data, 22);
+			Debug.Log ("Player " + senderId + " is at (" + posX + ", " + posY +", "+posZ+ ") " +
+			           "traveling (" + velX + ", " + velY +", "+velZ+ ")");
+			// We'd better tell our GameController about this.
+			posicion = new Vector3(posX,posY,posZ);
+			velocidad = new Vector3(velX,velY,velZ);
+			if (updateListener != null) {
+				updateListener.UpdateReceived(senderId, posicion, velocidad);
+			}
+		}
 	}
 	
 	public void OnParticipantLeft (Participant participant)
@@ -120,4 +155,28 @@ public class MPmanager : RealTimeMultiplayerListener {
 			LobbyListener.SetLobbyStatusMessage(message);
 		}
 	}
+
+	public List<Participant> GetAllPlayers() {
+		return PlayGamesPlatform.Instance.RealTime.GetConnectedParticipants ();
+	}
+
+	public string GetMyParticipantId() {
+		return PlayGamesPlatform.Instance.RealTime.GetSelf().ParticipantId;
+	}
+
+	public void SendMyUpdate(Vector3 posicion, Vector3 velocity) {
+		_updateMessage.Clear ();
+		_updateMessage.Add (_protocolVersion);
+		_updateMessage.Add ((byte)'U');
+		_updateMessage.AddRange (System.BitConverter.GetBytes (posicion.x));  
+		_updateMessage.AddRange (System.BitConverter.GetBytes (posicion.y));  
+		_updateMessage.AddRange (System.BitConverter.GetBytes (posicion.z));
+		_updateMessage.AddRange (System.BitConverter.GetBytes (velocity.x));
+		_updateMessage.AddRange (System.BitConverter.GetBytes (velocity.y));
+		_updateMessage.AddRange (System.BitConverter.GetBytes (velocity.z));
+		byte[] messageToSend = _updateMessage.ToArray(); 
+		Debug.Log ("Sending my update message  " + messageToSend + " to all players in the room");
+		PlayGamesPlatform.Instance.RealTime.SendMessageToAll (true, messageToSend);
+	}
+
 }

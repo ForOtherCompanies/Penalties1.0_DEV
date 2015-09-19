@@ -32,13 +32,13 @@ public class ModoPenalties : GameModeVirtual
 	protected bool accionIA = false;
 	//setPrivate
 	//// variables para el lanzamiento
-	private Vector3 direccionTiro;
-	private float fuerzaTiro;
+	protected Vector3 direccionTiro;
+	protected float fuerzaTiro;
 	//// variables para el portero
-	private Vector3 direccionSalto;
-	private float fuerzaSalto;
-	private bool esperaTiro;
-	private bool accionRealizada;
+	protected Vector3 direccionSalto;
+	protected float fuerzaSalto;
+	protected bool esperaTiro;
+	protected bool accionRealizada;
 	private float tiempoParada = 0.5f;
 	private float tiempoEntreFases = 3f;
 	private float tiempoIATiro = 3f;
@@ -180,7 +180,7 @@ public class ModoPenalties : GameModeVirtual
 
 	//nos tiene que devolver el vector direccion y la fuerza del lanzamiento.
 	//bool PrepararLanzamiento (Vector2 inicio, Vector2 fin, bool parar)
-	bool PrepararLanzamiento (Vector2 inicio, Vector2 fin)
+	protected bool PrepararLanzamiento (Vector2 inicio, Vector2 fin)
 	{
 		
 		RaycastHit hit;
@@ -204,7 +204,7 @@ public class ModoPenalties : GameModeVirtual
 		
 	}
 	
-	void PrepararSaltoPortero (Vector2 inicio, Vector2 fin)
+	protected void PrepararSaltoPortero (Vector2 inicio, Vector2 fin)
 	{
 		Vector3 vectorSalto = fin - inicio;
 		

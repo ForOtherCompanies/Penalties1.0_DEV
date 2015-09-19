@@ -15,6 +15,7 @@ public class GameModeManager : MonoBehaviour {
 	public EntrenamientoDianas entrenamientoDianas;
 	public EntrenamientoEstandar entrenamientoEstandar;
 	public EntrenamientoParadas entrenamientoParadas;
+	public MultiPlayerGController multiplayerGame;
 	//game objects necesarios
 	public PelotaGameRules pelotaRules;
 
@@ -44,14 +45,22 @@ public class GameModeManager : MonoBehaviour {
 		
 	}
 
+	public void ActivateMultplayer(){
+		DisableCurrentMode();
+		currentGameMode = multiplayerGame;
+		currentGameMode.enabled = true;
+		
+		pelotaRules.currentGameMode = currentGameMode;
+		
+	}
+
 	public void ActivateEntrenamientoParadas(){
 		DisableCurrentMode();
 		currentGameMode = entrenamientoParadas;
-		currentGameMode.enabled = true;
-
-
-		
+		currentGameMode.enabled = true;		
 	}
+
+
 
 	public void DisableCurrentMode(){
 		if (currentGameMode != null)
