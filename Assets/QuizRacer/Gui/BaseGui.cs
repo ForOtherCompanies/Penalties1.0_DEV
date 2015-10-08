@@ -18,9 +18,9 @@ using UnityEngine;
 
 public class BaseGui : MonoBehaviour
 {
-    protected WidgetConfig CenterLabelCfg = 
+    protected WidgetConfig CenterLabelCfg =
         new WidgetConfig(0.0f, 0.0f, 0.7f, 0.7f, 60, "Please wait...");
-    protected WidgetConfig UpButtonCfg = 
+    protected WidgetConfig UpButtonCfg =
         new WidgetConfig(WidgetConfig.WidgetAnchor.Top,
             -0.3f,
             0.1f,
@@ -44,7 +44,8 @@ public class BaseGui : MonoBehaviour
         {
             Center = 0,
             Top = 1,
-            Bottom = 2}
+            Bottom = 2
+        }
 
         ;
 
@@ -192,6 +193,22 @@ public class BaseGui : MonoBehaviour
     protected bool GuiButton(WidgetConfig config)
     {
         return GuiButton(config, null);
+    }
+
+    protected void GuiBox(WidgetConfig config, string overrideText)
+    {
+        if (!mStandBy)
+        {
+            GUI.skin.box.alignment = config.ContentAnchor;
+            GUI.skin.box.fontSize = ScreenFontSize(config.FontSize);
+            GUI.Box(GetWidgetRect(config), overrideText == null ? config.Text : overrideText);
+        }
+    }
+
+
+    protected void GuiBox(WidgetConfig config)
+    {
+        GuiBox(config, null);
     }
 
     public void MakeActive()

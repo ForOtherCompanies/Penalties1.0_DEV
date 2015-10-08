@@ -20,7 +20,7 @@ using GooglePlayGames.BasicApi.Multiplayer;
 
 public class TrainingGUI : BaseGui
 {
-    WidgetConfig TitleCfg = new WidgetConfig(0.0f, -0.2f, 1.0f, 0.2f, 100, "Penaltis");
+    WidgetConfig TitleCfg = new WidgetConfig(0.0f, -0.2f, 1.0f, 0.2f, 100, "Entrenamiento");
     WidgetConfig VScomCfg = new WidgetConfig(0.0f, -0.1f, 0.8f, 0.1f, 60, "Vs com");
     WidgetConfig GkeeperCfg = new WidgetConfig(0.0f, 0.0f, 0.8f, 0.1f, 60, "Paradas");
     WidgetConfig DianaCfg = new WidgetConfig(0.0f, 0.1f, 0.8f, 0.1f, 60, "Dianas");

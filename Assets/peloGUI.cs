@@ -18,14 +18,11 @@ using UnityEngine;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi.Multiplayer;
 
-public class  MultiplayerGUI: BaseGui
+public class peloGUI : BaseGui
 {
-    WidgetConfig TitleCfg = new WidgetConfig(0.0f, -0.2f, 1.0f, 0.2f, 100, "Multi-Jugador");
-    WidgetConfig QuickMatchCfg = new WidgetConfig(0.0f, -0.1f, 0.8f, 0.1f, 60, "Juego rapido");
-    WidgetConfig InviteCfg = new WidgetConfig(0.0f, 0.0f, 0.8f, 0.1f, 60, "Invitar");
-    WidgetConfig InboxCfg = new WidgetConfig(0.0f, 0.1f, 0.8f, 0.1f, 60, "ver invitaciones");
-    WidgetConfig SignOutCfg = new WidgetConfig(WidgetConfig.WidgetAnchor.Bottom, 0.2f, -0.05f, 0.4f, 0.1f,
-                                  TextAnchor.MiddleCenter, 45, "Back");
+    WidgetConfig VScomCfg = new WidgetConfig(0.0f, -0.1f, 0.8f, 0.1f, 60, "Vs com");
+    WidgetConfig GkeeperCfg = new WidgetConfig(0.0f, 0.0f, 0.8f, 0.1f, 60, "Paradas");
+    WidgetConfig DianaCfg = new WidgetConfig(0.0f, 0.1f, 0.8f, 0.1f, 60, "Dianas");
 
     public void Start()
     {
@@ -57,31 +54,21 @@ public class  MultiplayerGUI: BaseGui
 
     protected override void DoGUI()
     {
-        GuiLabel(TitleCfg);
 
-        if (GuiButton(QuickMatchCfg))
+        if (GuiButton(VScomCfg))
         {
-            GameConector.CreateQuickGame();
+            //GameConector.CreateQuickGame();
             //gameObject.GetComponent<RaceGui>().MakeActive();
         }
-        else if (GuiButton(InviteCfg))
+        else if (GuiButton(GkeeperCfg))
         {
-            GameConector.CreateWithInvitationScreen();
+            //GameConector.CreateWithInvitationScreen();
             //gameObject.GetComponent<RaceGui>().MakeActive();
         }
-        else if (GuiButton(InboxCfg))
+        else if (GuiButton(DianaCfg))
         {
-            GameConector.AcceptFromInbox();
+            //GameConector.AcceptFromInbox();
             //gameObject.GetComponent<RaceGui>().MakeActive();
         }
-        else if (GuiButton(SignOutCfg))
-        {
-            DoBack();
-        }
-    }
-
-    void DoBack()
-    {
-        gameObject.GetComponent<MainMenuGui>().MakeActive();
     }
 }

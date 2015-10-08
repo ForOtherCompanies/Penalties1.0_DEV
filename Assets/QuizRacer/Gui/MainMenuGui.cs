@@ -104,7 +104,7 @@ public class MainMenuGui : BaseGui
         if (GuiButton(TrainingCfg))
         {
             //GameConector.CreateQuickGame();
-            //gameObject.GetComponent<RaceGui>().MakeActive();
+            gameObject.GetComponent<TrainingGUI>().MakeActive();
         }
         else if (GuiButton(MPCfg))
         {
@@ -114,7 +114,7 @@ public class MainMenuGui : BaseGui
         else if (GuiButton(VestCfg))
         {
             //GameConector.AcceptFromInbox();
-            //gameObject.GetComponent<RaceGui>().MakeActive();
+            gameObject.GetComponent<VestuarioGUI>().MakeActive();
         }
         else if (GuiButton(SignOutCfg))
         {

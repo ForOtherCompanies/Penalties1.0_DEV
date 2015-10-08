@@ -18,18 +18,24 @@ using UnityEngine;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi.Multiplayer;
 
-public class  MultiplayerGUI: BaseGui
+public class VestuarioGUI : BaseGui
 {
-    WidgetConfig TitleCfg = new WidgetConfig(0.0f, -0.2f, 1.0f, 0.2f, 100, "Multi-Jugador");
-    WidgetConfig QuickMatchCfg = new WidgetConfig(0.0f, -0.1f, 0.8f, 0.1f, 60, "Juego rapido");
-    WidgetConfig InviteCfg = new WidgetConfig(0.0f, 0.0f, 0.8f, 0.1f, 60, "Invitar");
-    WidgetConfig InboxCfg = new WidgetConfig(0.0f, 0.1f, 0.8f, 0.1f, 60, "ver invitaciones");
+    WidgetConfig TitleCfg = new WidgetConfig(0.0f, -0.25f, 1.0f, 0.2f, 100, "Vestuario");
+    WidgetConfig BoxCfg = new WidgetConfig(0.2f, 0f, 0.4f, 0.4f, 60, "");
+
+    WidgetConfig PeloCfg = new WidgetConfig(-0.05f, -0.175f, 0.1f, 0.05f, 30, "Pelo");
     WidgetConfig SignOutCfg = new WidgetConfig(WidgetConfig.WidgetAnchor.Bottom, 0.2f, -0.05f, 0.4f, 0.1f,
                                   TextAnchor.MiddleCenter, 45, "Back");
 
+    public Camera AvatarCamera;
+
+    BaseGui activo;
+    WidgetConfig pulsado;
+    int numButon = -1;
+
     public void Start()
     {
-        // no op
+
     }
 
     public void Update()
@@ -53,35 +59,56 @@ public class  MultiplayerGUI: BaseGui
                 gameObject.GetComponent<IncomingInvitationGui>().MakeActive();
             }
         }
+        if (!AvatarCamera.enabled)
+        {
+            AvatarCamera.enabled = true;
+        }
     }
 
     protected override void DoGUI()
     {
         GuiLabel(TitleCfg);
 
-        if (GuiButton(QuickMatchCfg))
-        {
-            GameConector.CreateQuickGame();
-            //gameObject.GetComponent<RaceGui>().MakeActive();
-        }
-        else if (GuiButton(InviteCfg))
-        {
-            GameConector.CreateWithInvitationScreen();
-            //gameObject.GetComponent<RaceGui>().MakeActive();
-        }
-        else if (GuiButton(InboxCfg))
-        {
-            GameConector.AcceptFromInbox();
-            //gameObject.GetComponent<RaceGui>().MakeActive();
-        }
-        else if (GuiButton(SignOutCfg))
+        GuiBox(BoxCfg);
+
+        if (GuiButton(SignOutCfg))
         {
             DoBack();
+        }
+        else if (GuiButton(PeloCfg))
+        {
+            recolocar();
+            if (activo != null)
+            {
+                activo.enabled = false;
+            }
+            AvatarCamera.GetComponent<peloGUI>().MakeActive();
+            activo = AvatarCamera.GetComponent<peloGUI>();
+            pulsado = PeloCfg;
+            PeloCfg = new WidgetConfig(-0.075f, -0.175f, 0.1f, 0.05f, 30, "Pelo");
+            numButon = 1;
+        }
+    }
+
+    void recolocar()
+    {
+        switch (numButon)
+        {
+            case 1:
+                PeloCfg = pulsado;
+                break;
         }
     }
 
     void DoBack()
     {
+        AvatarCamera.enabled = false;
+        if (activo != null)
+        {
+            activo.enabled = false;
+        }
+        recolocar();
+
         gameObject.GetComponent<MainMenuGui>().MakeActive();
     }
 }
