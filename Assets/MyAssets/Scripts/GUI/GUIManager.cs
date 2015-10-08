@@ -86,7 +86,7 @@ public class GUIManager : MonoBehaviour {
 	}
 
 	public void StartMultiPlayer(){
-		MPmanager.Instance.ComenzarMultiPlayer ();
+	//	MPmanager.Instance.ComenzarMultiPlayer ();
 		gameModeManager.ActivateMultplayer ();
 	}
 }
