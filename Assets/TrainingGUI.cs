@@ -27,6 +27,8 @@ public class TrainingGUI : BaseGui
     WidgetConfig SignOutCfg = new WidgetConfig(WidgetConfig.WidgetAnchor.Bottom, 0.2f, -0.05f, 0.4f, 0.1f,
                                   TextAnchor.MiddleCenter, 45, "Back");
 
+    public MacthController controlador;
+
     public void Start()
     {
         // no op
@@ -61,8 +63,8 @@ public class TrainingGUI : BaseGui
 
         if (GuiButton(VScomCfg))
         {
-            //GameConector.CreateQuickGame();
-            //gameObject.GetComponent<RaceGui>().MakeActive();
+            controlador.ActivarModoActual(new ModoVSia());
+            //activar vista juego;
         }
         else if (GuiButton(GkeeperCfg))
         {
