@@ -211,6 +211,23 @@ public class BaseGui : MonoBehaviour
         GuiBox(config, null);
     }
 
+    protected void GuiPelota(WidgetConfig config, string overrideText,int i)
+    {
+        if (!mStandBy)
+        {
+            
+            GUI.skin.customStyles[i].alignment = config.ContentAnchor;
+            GUI.skin.customStyles[i].fontSize = ScreenFontSize(config.FontSize);
+            GUI.Box(GetWidgetRect(config), overrideText == null ? config.Text : overrideText,GUI.skin.customStyles[i]);
+        }
+    }
+
+
+    protected void GuiPelota(WidgetConfig config, int i)
+    {
+        GuiPelota(config, null,i);
+    }
+
     public void MakeActive()
     {
         foreach (Component comp in gameObject.GetComponents(typeof(BaseGui)))

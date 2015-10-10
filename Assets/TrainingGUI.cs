@@ -63,7 +63,9 @@ public class TrainingGUI : BaseGui
 
         if (GuiButton(VScomCfg))
         {
-            controlador.ActivarModoActual(new ModoVSia());
+
+            gameObject.GetComponent<gameUI>().MakeActive();
+            //controlador.ActivarModoActual(new ModoVSia());
             //activar vista juego;
         }
         else if (GuiButton(GkeeperCfg))

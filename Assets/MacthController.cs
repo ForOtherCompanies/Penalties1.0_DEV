@@ -13,7 +13,8 @@ public class MacthController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        modalidadActivada.Update();
+       if(modalidadActivada!=null)
+           modalidadActivada.Update();
 	}
 
 
