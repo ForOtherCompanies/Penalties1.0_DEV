@@ -47,8 +47,6 @@ public class EntrenamientoEstandar : ModoPenalties
 			contadorPlayer2 ++;
 			textPlayer2.text = contadorPlayer2.ToString();
 		}
-
-
 	}
 	public  void Update ()
 	{

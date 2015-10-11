@@ -45,6 +45,7 @@ public class ModoPenalties : GameModeVirtual
 	private float contadorIA = 0;
 	private float contadorCambioFase = 0;
 
+    //COPIADO
 	public virtual void OnEnable ()
 	{
 		timer = 10;
@@ -59,6 +60,7 @@ public class ModoPenalties : GameModeVirtual
 
 	}
 
+    //COPIADO
 	protected virtual void EsperarJugador ()
 	{
 		if (!accionRealizada) {
@@ -82,6 +84,8 @@ public class ModoPenalties : GameModeVirtual
 		}
 	}
 
+
+    //pensarlo
 	protected virtual void AccionesRealizadas ()
 	{
 		if (accionRealizada) {
@@ -114,6 +118,8 @@ public class ModoPenalties : GameModeVirtual
 		}
 	}
 
+
+    //COPIADO
 	//funciona
 	protected void EmpezarContador ()
 	{
@@ -156,6 +162,12 @@ public class ModoPenalties : GameModeVirtual
 		portero.reiniciar ();
 	}
 
+
+
+
+
+
+
 	public override void RealizarAcciones (Vector2 inicioTouch, Vector3 destinoTouch)
 	{
 		//if 'estamos como delantero y todo esta correcto para lanzar'
@@ -164,14 +176,14 @@ public class ModoPenalties : GameModeVirtual
 			if (PrepararLanzamiento (inicioTouch, destinoTouch)) {
 				//pelota.lanzamiento se lanzara desde la animacion del player tirando para que coincida con el momento justo
 				////desde aqui lo que habra que hacer es poner la animacion en 'play'
-				pelota.Lanzamiento (direccionTiro, fuerzaTiro);
+				//pelota.Lanzamiento (direccionTiro, fuerzaTiro);
 				accionIA = true;
 			}
 		}
 		
 		if (rolActual == ModoJuego.Portero) {
 			PrepararSaltoPortero (inicioTouch, destinoTouch);
-			portero.Saltar (direccionSalto, fuerzaSalto);
+			//portero.Saltar (direccionSalto, fuerzaSalto);
 		}
 		esperaTiro = false;
 		accionRealizada = true;

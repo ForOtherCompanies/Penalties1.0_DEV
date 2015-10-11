@@ -28,36 +28,7 @@ public class MainMenuGui : BaseGui
     WidgetConfig SignOutCfg = new WidgetConfig(WidgetConfig.WidgetAnchor.Bottom, 0.2f, -0.05f, 0.4f, 0.1f,
                                   TextAnchor.MiddleCenter, 45, "Sign Out");
 
-    bool mAuthOnStart = true;
-    bool conectado = false;
-    System.Action<bool> mAuthCallback;
-
-    void Start()
-    {
-        mAuthCallback = (bool success) =>
-        {
-            if (success)
-            {
-                conectado = true;
-            }
-        };
-
-        var config = new PlayGamesClientConfiguration.Builder()
-            .WithInvitationDelegate(InvitationManager.Instance.OnInvitationReceived)
-            .Build();
-
-        PlayGamesPlatform.InitializeInstance(config);
-
-        // make Play Games the default social implementation
-        PlayGamesPlatform.Activate();
-
-
-        // enable debug logs (note: we do this because this is a sample; on your production
-        // app, you probably don't want this turned on by default, as it will fill the user's
-        // logs with debug info).
-        PlayGamesPlatform.DebugLogEnabled = true;
-
-    }
+   
 
 
     public void Update()
@@ -81,20 +52,7 @@ public class MainMenuGui : BaseGui
                 gameObject.GetComponent<IncomingInvitationGui>().MakeActive();
             }
         }
-        // try silent authentication
-        if (!PlayGamesPlatform.Instance.IsAuthenticated() && !conectado)
-        {
-            if (mAuthOnStart)
-            {
-                PlayGamesPlatform.Instance.Authenticate(mAuthCallback, true);
-            }
-            else
-            {
-                PlayGamesPlatform.Instance.Authenticate(mAuthCallback);
-
-            }
-
-        }
+       
     }
 
     protected override void DoGUI()
@@ -116,16 +74,12 @@ public class MainMenuGui : BaseGui
             //GameConector.AcceptFromInbox();
             gameObject.GetComponent<VestuarioGUI>().MakeActive();
         }
-        else if (GuiButton(SignOutCfg))
+        else if (GuiButton(SignOutCfg) || Input.GetKey(KeyCode.Escape))
         {
-            DoSignOut();
+
+            gameObject.GetComponent<exitGUI>().MakeActive();
         }
     }
 
-    void DoSignOut()
-    {
-        PlayGamesPlatform.Instance.SignOut();
-        gameObject.GetComponent<WelcomeGui>().SetAuthOnStart(false);
-        gameObject.GetComponent<WelcomeGui>().MakeActive();
-    }
+  
 }

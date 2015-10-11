@@ -61,20 +61,23 @@ public class  MultiplayerGUI: BaseGui
 
         if (GuiButton(QuickMatchCfg))
         {
-            GameConector.CreateQuickGame();
-            //gameObject.GetComponent<RaceGui>().MakeActive();
+            if (PlayGamesPlatform.Instance.localUser.authenticated)
+            {
+                GameConector.CreateQuickGame();
+            
+            }//gameObject.GetComponent<RaceGui>().MakeActive();
         }
         else if (GuiButton(InviteCfg))
         {
-            GameConector.CreateWithInvitationScreen();
+            //GameConector.CreateWithInvitationScreen();
             //gameObject.GetComponent<RaceGui>().MakeActive();
         }
         else if (GuiButton(InboxCfg))
         {
-            GameConector.AcceptFromInbox();
+            //GameConector.AcceptFromInbox();
             //gameObject.GetComponent<RaceGui>().MakeActive();
-        }
-        else if (GuiButton(SignOutCfg))
+        } 
+        else if (GuiButton(SignOutCfg)||Input.GetKey(KeyCode.Escape))
         {
             DoBack();
         }

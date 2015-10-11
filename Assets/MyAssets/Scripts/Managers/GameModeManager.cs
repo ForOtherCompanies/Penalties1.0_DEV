@@ -41,7 +41,7 @@ public class GameModeManager : MonoBehaviour {
 		currentGameMode = entrenamientoEstandar;
 		currentGameMode.enabled = true;
 
-		pelotaRules.currentGameMode = currentGameMode;
+		//pelotaRules.currentGameMode = currentGameMode;
 		
 	}
 
@@ -50,7 +50,7 @@ public class GameModeManager : MonoBehaviour {
 		//currentGameMode = multiplayerGame;
 		currentGameMode.enabled = true;
 		
-		pelotaRules.currentGameMode = currentGameMode;
+		//pelotaRules.currentGameMode = currentGameMode;
 		
 	}
 

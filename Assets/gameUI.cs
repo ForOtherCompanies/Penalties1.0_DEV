@@ -20,9 +20,12 @@ using GooglePlayGames.BasicApi.Multiplayer;
 
 public class gameUI : BaseGui
 {
-    WidgetConfig TiradorCfg = new WidgetConfig(-0.35f, -0.275f, 1.0f, 0.2f, 60, "Tirador");
 
-    WidgetConfig PorteroCfg = new WidgetConfig(0.2f, -0.275f, 1.0f, 0.2f, 60, "Portero");
+    public MacthController mController;
+    public Info informacion;
+    WidgetConfig TiradorCfg = new WidgetConfig(-0.35f, -0.275f, 1.0f, 0.2f, 60,"");
+
+    WidgetConfig PorteroCfg = new WidgetConfig(0.2f, -0.275f, 1.0f, 0.2f, 60, "Com");
 
 
     WidgetConfig[] GolTiradorCfg = new WidgetConfig[5];
@@ -30,8 +33,6 @@ public class gameUI : BaseGui
     int[] estadoJuegoT = new int[5];
     int[] estadoJuegoP = new int[5];
 
-    WidgetConfig GkeeperCfg = new WidgetConfig(0.0f, 0.0f, 0.7f, 0.7f, 60, "Paradas");
-    WidgetConfig DianaCfg = new WidgetConfig(0.0f, 0.1f, 0.7f, 0.7f, 60, "Dianas");
     WidgetConfig SignOutCfg = new WidgetConfig(WidgetConfig.WidgetAnchor.Bottom, 0.45f, -0.05f, 0.1f, 0.05f,
                                   TextAnchor.MiddleCenter, 30, "Back");
 
@@ -45,8 +46,8 @@ public class gameUI : BaseGui
         {
             GolTiradorCfg[i] = new WidgetConfig(posT, -0.2f, 0.07f, 0.07f, 0, "");
             GolPorteroCfg[i] = new WidgetConfig(posP, -0.2f, 0.07f, 0.07f, 0, "");
-            estadoJuegoP[i] = 1;
-            estadoJuegoT[i] = 2;
+            estadoJuegoP[i] = 0;
+            estadoJuegoT[i] = 0;
             posT += incremento;
             posP += incremento;
 
@@ -78,7 +79,7 @@ public class gameUI : BaseGui
 
     protected override void DoGUI()
     {
-        GuiLabel(TiradorCfg);
+        GuiLabel(TiradorCfg, informacion.GetNombre());
         GuiLabel(PorteroCfg);
 
         for (int i = 0; i < 5; ++i)
@@ -87,15 +88,17 @@ public class gameUI : BaseGui
             GuiPelota(GolPorteroCfg[i], estadoJuegoP[i]);
         }
 
-        if (GuiButton(SignOutCfg))
+        if (GuiButton(SignOutCfg) || Input.GetKey(KeyCode.Escape))
         {
             DoBack();
         }
     }
 
-    void DoBack()
+    public void DoBack()
     {
         gameObject.GetComponent<TrainingGUI>().MakeActive();
+        gameObject.GetComponentInParent<CameraController>().DesactivarGameCamera();
+        mController.Desactivar();
     }
 
     //tirador significa si soy o no el tirador
@@ -106,12 +109,12 @@ public class gameUI : BaseGui
         {
             if (acierto)
             {
-                estadoJuegoT[fase] = 1;
+                estadoJuegoT[fase] = 2;
             }
             else
             {
 
-                estadoJuegoT[fase] = 2;
+                estadoJuegoT[fase] = 1;
             }
         }
         else

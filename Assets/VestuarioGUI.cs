@@ -71,7 +71,7 @@ public class VestuarioGUI : BaseGui
 
         GuiBox(BoxCfg);
 
-        if (GuiButton(SignOutCfg))
+        if (GuiButton(SignOutCfg) || Input.GetKey(KeyCode.Escape))
         {
             DoBack();
         }

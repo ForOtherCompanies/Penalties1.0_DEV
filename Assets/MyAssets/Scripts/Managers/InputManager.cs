@@ -6,20 +6,17 @@ public class InputManager : MonoBehaviour {
 //	public bool portero = true;
 
 	//to set private
-	public Vector2 inicioTouch = Vector2.zero;
-	public Vector2 finTouch = Vector2.zero;
+	//public Vector2 inicioTouch = Vector2.zero;
+	//public Vector2 finTouch = Vector2.zero;
 
-	private Touch myTouch; 
+	//private Touch myTouch; 
 
 	//references to other scripts
 	//public GameManager gameManager;
-	public GameModeVirtual gameManager;
 	public InputEffects inputEffects;
 	
 	// Update is called once per frame
-	void Update () {
-
-
+	/*void Update () {
 
 		if (Input.touchCount>0){
 			myTouch = Input.GetTouch (0);
@@ -30,14 +27,66 @@ public class InputManager : MonoBehaviour {
 				inputEffects.iniciar();
 			}
 
-			//al final del touch guaradr la posicion y llamar a la funcion que calcula el tiro pasando los parametros
+			//al final del touch guardar la posicion y llamar a la funcion que calcula el tiro pasando los parametros
 			if (myTouch.phase == TouchPhase.Ended){
 				finTouch = myTouch.position;	
 				gameManager.RealizarAcciones (inicioTouch, finTouch);		
 				inputEffects.Parar();
 			}
 		}
+    }*/
+     private float length = 0;
+     private bool SW = false;
+     private Vector3 final;
+     private Vector3 startpos;
+     private Vector3 endpos;
+     
+     // Update is called once per frame
+     void Update ()
+     {
+     
+         if (Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Began) 
+         {
+             final = Vector3.zero;
+             length = 0;
+             SW = false;
+             Vector2 touchDeltaPosition = Input.GetTouch (0).position;
+             startpos = new Vector3 (touchDeltaPosition.x, 0, touchDeltaPosition.y);
+             inputEffects.iniciar();
+         }      
+         if (Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Moved) 
+         {
+             SW = true;
+             Vector2 touchPosition = Input.GetTouch(0).position;
+             endpos = new Vector3(touchPosition.x, 0, touchPosition.y);
+             final = endpos - startpos;
+             length += final.magnitude;
+             startpos = endpos;
+         }
+ 
+         if (Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Canceled) 
+         {
+             SW = false;
+         }
+ 
+         if (Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Stationary) 
+         {
+             SW = false;
+         }
+         if (Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Ended) 
+         {
+             if (SW) 
+             {
+                 Vector2 touchPosition = Input.GetTouch (0).position;
+                 endpos = new Vector3 (touchPosition.x, 0, touchPosition.y);
+                 final = endpos - startpos;
+                 length += final.magnitude;
 
-	}
+                 this.GetComponent<MacthController>().RealizarAcciones(length, endpos);
+
+                 inputEffects.Parar();
+             }
+         }
+     }
 
 }

@@ -15,6 +15,8 @@
 // </copyright>
 
 using UnityEngine;
+
+using System.Collections;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi.Multiplayer;
 using System.Collections.Generic;
@@ -139,7 +141,9 @@ public class GameConector : RealTimeMultiplayerListener
     }
 
     private void SetupTrack()
-    {/*
+    {
+        GameObject.Find("Camaras").GetComponentInChildren<gameUI>().MakeActive();
+        /*
         BehaviorUtils.MakeVisible(GameObject.Find(RaceTrackName), true);
         Debug.Log("About to get self");
         Participant self = GetSelf();
@@ -249,9 +253,15 @@ public class GameConector : RealTimeMultiplayerListener
       */
     }
 
+    private bool showingWaitingRoom = false;
+
     public void OnRoomSetupProgress(float percent)
     {
-        mRoomSetupProgress = percent;
+        if (!showingWaitingRoom)
+        {
+            showingWaitingRoom = true;
+            PlayGamesPlatform.Instance.RealTime.ShowWaitingRoomUI();
+        }
     }
 
     public void OnRealTimeMessageReceived(bool isReliable, string senderId, byte[] data)

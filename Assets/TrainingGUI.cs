@@ -65,8 +65,8 @@ public class TrainingGUI : BaseGui
         {
 
             gameObject.GetComponent<gameUI>().MakeActive();
-            //controlador.ActivarModoActual(new ModoVSia());
-            //activar vista juego;
+            controlador.ActivarModoActual(new ModoVSia());
+            gameObject.GetComponentInParent<CameraController>().ActivarGameCamera();
         }
         else if (GuiButton(GkeeperCfg))
         {
@@ -78,7 +78,7 @@ public class TrainingGUI : BaseGui
             //GameConector.AcceptFromInbox();
             //gameObject.GetComponent<RaceGui>().MakeActive();
         }
-        else if (GuiButton(SignOutCfg))
+        else if (GuiButton(SignOutCfg) || Input.GetKey(KeyCode.Escape))
         {
             DoBack();
         }

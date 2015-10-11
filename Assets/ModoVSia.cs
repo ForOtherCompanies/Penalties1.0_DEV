@@ -1,15 +1,44 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ModoVSia : ModoJuego{
+public class ModoVSia : ModoJuego
+{
+
+
 
     public override void Update()
     {
-        base.Update();
+        EsperarJugador();
+        AccionesRealizadas();
+        AccionesIA();
     }
-    public override void Inicializar()
+
+    protected override void CambioFase()
     {
-        base.Inicializar();
+        if (mController.GetRolActual() == MacthController.Rol.Portero)
+        {
+            ++fase;
+            mController.setRolTirador();
+        }
+        else
+        {
+            mController.setRolPortero();
+        }
+        if (fase < 5)
+        {
+
+            Debug.Log(fase);
+            mController.ColocarCamara();
+            mController.activarInput();
+            mController.reset();
+            EmpezarContador();
+            marcado = false;
+        }
+        else
+        {
+            GUI.DoBack();
+
+        }
     }
 
 }
