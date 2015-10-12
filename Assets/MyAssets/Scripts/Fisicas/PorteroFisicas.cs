@@ -12,7 +12,9 @@ public class PorteroFisicas : PhysicManager{
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
+
+        GameConector.Instance.sendPortero(transform.position, transform.rotation);
 	
 	}
 	public override void AccionIA(Vector3 direccion, float fuerza,int level){
@@ -36,5 +38,11 @@ public class PorteroFisicas : PhysicManager{
         direccionSalto = vectorSalto.normalized;
         direccionSalto.x *= (-1);
         rb.AddForce(direccionSalto * fuerzaSalto * 2);
+    }
+
+    internal void setPosition(Vector3 position, Quaternion rotation)
+    {
+        transform.position = position;
+        transform.rotation = rotation;
     }
 }

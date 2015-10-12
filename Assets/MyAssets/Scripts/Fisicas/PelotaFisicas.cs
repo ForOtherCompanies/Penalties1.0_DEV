@@ -43,6 +43,7 @@ public class PelotaFisicas : PhysicManager
                 }
             rb.AddForce(efecto, ForceMode.Force);
         }
+        GameConector.Instance.sendBola(transform.position,transform.rotation);
     }
 
     public override void AccionIA(Vector3 direccion, float fuerza, int level)
@@ -132,5 +133,12 @@ public class PelotaFisicas : PhysicManager
         }
 
         return false;
+    }
+
+    internal void setPosition(Vector3 position, Quaternion rotation)
+    {
+
+        transform.position = position;
+        transform.rotation = rotation;
     }
 }
