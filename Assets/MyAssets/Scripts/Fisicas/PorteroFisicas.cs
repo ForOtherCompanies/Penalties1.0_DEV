@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using GooglePlayGames;
 
 public class PorteroFisicas : PhysicManager{
 
@@ -12,9 +13,9 @@ public class PorteroFisicas : PhysicManager{
 	}
 	
 	// Update is called once per frame
-	void FixedUpdate () {
-
-        GameConector.Instance.sendPortero(transform.position, transform.rotation);
+    public void SendInfo(Vector3 final)
+    {
+        GameConector.sendPortero(final);
 	
 	}
 	public override void AccionIA(Vector3 direccion, float fuerza,int level){

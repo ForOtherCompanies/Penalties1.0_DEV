@@ -148,10 +148,11 @@ public class GameConector : RealTimeMultiplayerListener
         sendName(gameController.GetComponent<Info>().GetNombre());
         List<Participant> listaParticipantes = GetRacers();
         string ID = GetSelf().ParticipantId;
-        foreach(Participant p in listaParticipantes){
+        foreach (Participant p in listaParticipantes)
+        {
             if (p.ParticipantId != ID)
             {
-                if (Convert.ToInt32(p.ParticipantId) > Convert.ToInt32(ID))
+                if (p.ParticipantId.GetHashCode() > ID.GetHashCode())
                 {
                     gameController.GetComponent<MacthController>().SetPosition(2);
                 }
@@ -161,8 +162,7 @@ public class GameConector : RealTimeMultiplayerListener
                 }
             }
         }
-
-        gameController.GetComponent<MacthController>().ActivarModoActual(new ModoVSia());
+        gameController.GetComponent<MacthController>().ActivarModoActual(new ModoPvP());
         cameras.GetComponentInChildren<gameUI>().MakeActive();
         cameras.GetComponent<CameraController>().ActivarGameCamera();
     }
@@ -256,8 +256,8 @@ public class GameConector : RealTimeMultiplayerListener
 
     public void OnRealTimeMessageReceived(bool isReliable, string senderId, byte[] data)
     {
-        Vector3 position;
-        Quaternion rotation;
+        Vector3 final;
+        float lenght;
         switch (data[0])
         {
             case (byte)'N':
@@ -266,25 +266,17 @@ public class GameConector : RealTimeMultiplayerListener
                 GameObject.Find("GameController").GetComponent<MacthController>().SetOponentName(name);
                 break;
             case (byte)'B':
-                position.x = BitConverter.ToSingle(data, 1);
-                position.y = BitConverter.ToSingle(data, 5);
-                position.z = BitConverter.ToSingle(data, 9);
-                rotation.x = BitConverter.ToSingle(data, 13);
-                rotation.y = BitConverter.ToSingle(data, 17);
-                rotation.z = BitConverter.ToSingle(data, 21);
-                rotation.w = BitConverter.ToSingle(data, 25);
-                GameObject.Find("GameController").GetComponent<MacthController>().SetBallPosition(position,rotation);
+                final.x = BitConverter.ToSingle(data, 1);
+                final.y = BitConverter.ToSingle(data, 5);
+                final.z = BitConverter.ToSingle(data, 9);
+                lenght = BitConverter.ToSingle(data, 13);
+                GameObject.Find("GameController").GetComponent<MacthController>().SetAccion(lenght, final);
                 break;
             case (byte)'P':
-                position.x = BitConverter.ToSingle(data, 1);
-                position.y = BitConverter.ToSingle(data, 5);
-                position.z = BitConverter.ToSingle(data, 9);
-                rotation.x = BitConverter.ToSingle(data, 13);
-                rotation.y = BitConverter.ToSingle(data, 17);
-                rotation.z = BitConverter.ToSingle(data, 21);
-                rotation.w = BitConverter.ToSingle(data, 25);
-
-                GameObject.Find("GameController").GetComponent<MacthController>().SetPorteroPosition(position, rotation);
+                final.x = BitConverter.ToSingle(data, 1);
+                final.y = BitConverter.ToSingle(data, 5);
+                final.z = BitConverter.ToSingle(data, 9);
+                GameObject.Find("GameController").GetComponent<MacthController>().SetAccion(-1f,final);
                 break;
 
         }
@@ -361,37 +353,33 @@ public class GameConector : RealTimeMultiplayerListener
     private void sendName(string str)
     {
         str = 'N' + str;
-        byte[] bytes = new byte[str.Length * sizeof(char) + 1];
+        byte[] bytes = new byte[str.Length * sizeof(char)];
         System.Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
         PlayGamesPlatform.Instance.RealTime.SendMessageToAll(false, bytes);
     }
 
-    public void sendBola(Vector3 position,Quaternion rotation){
+    public static void sendBola(float longitud, Vector3 final)
+    {
 
-        byte[] bytes = new byte[25];
+        byte[] bytes = new byte[17];
         bytes[0] = (byte)'B';
-        Buffer.BlockCopy(bytes, 1, BitConverter.GetBytes(position.x), 0, 4);
-        Buffer.BlockCopy(bytes, 5, BitConverter.GetBytes(position.y), 0, 4);
-        Buffer.BlockCopy(bytes, 9, BitConverter.GetBytes(position.z), 0, 4);
-        Buffer.BlockCopy(bytes, 13, BitConverter.GetBytes(rotation.x), 0, 4);
-        Buffer.BlockCopy(bytes, 17, BitConverter.GetBytes(rotation.y), 0, 4);
-        Buffer.BlockCopy(bytes, 21, BitConverter.GetBytes(rotation.z), 0, 4);
-        Buffer.BlockCopy(bytes, 25, BitConverter.GetBytes(rotation.w), 0, 4);
+        Buffer.BlockCopy(BitConverter.GetBytes(final.x), 0,bytes , 1, 4);
+        Buffer.BlockCopy(BitConverter.GetBytes(final.y), 0, bytes, 5, 4);
+        Buffer.BlockCopy(BitConverter.GetBytes(final.z), 0, bytes, 9, 4);
+        Buffer.BlockCopy(BitConverter.GetBytes(longitud), 0, bytes, 13, 4);
 
         PlayGamesPlatform.Instance.RealTime.SendMessageToAll(true, bytes);
     }
 
-    public void sendPortero(Vector3 position, Quaternion rotation)
+
+    public static void sendPortero(Vector3 final)
     {
-        byte[] bytes = new byte[25];
+        byte[] bytes = new byte[13];
         bytes[0] = (byte)'P';
-        Buffer.BlockCopy(bytes, 1, BitConverter.GetBytes(position.x), 0, 4);
-        Buffer.BlockCopy(bytes, 5, BitConverter.GetBytes(position.y), 0, 4);
-        Buffer.BlockCopy(bytes, 9, BitConverter.GetBytes(position.z), 0, 4);
-        Buffer.BlockCopy(bytes, 13, BitConverter.GetBytes(rotation.x), 0, 4);
-        Buffer.BlockCopy(bytes, 17, BitConverter.GetBytes(rotation.y), 0, 4);
-        Buffer.BlockCopy(bytes, 21, BitConverter.GetBytes(rotation.z), 0, 4);
-        Buffer.BlockCopy(bytes, 25, BitConverter.GetBytes(rotation.w), 0, 4);
+        Buffer.BlockCopy(BitConverter.GetBytes(final.x), 0, bytes, 1, 4);
+        Buffer.BlockCopy(BitConverter.GetBytes(final.y), 0, bytes, 5, 4);
+        Buffer.BlockCopy(BitConverter.GetBytes(final.z), 0, bytes, 9, 4);
+
         PlayGamesPlatform.Instance.RealTime.SendMessageToAll(true, bytes);
     }
 

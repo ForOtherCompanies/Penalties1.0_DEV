@@ -43,7 +43,11 @@ public class PelotaFisicas : PhysicManager
                 }
             rb.AddForce(efecto, ForceMode.Force);
         }
-        GameConector.Instance.sendBola(transform.position,transform.rotation);
+    }
+
+    public void SendInfo(float length, Vector3 fin)
+    {
+        GameConector.sendBola(length, fin);
     }
 
     public override void AccionIA(Vector3 direccion, float fuerza, int level)
@@ -106,12 +110,12 @@ public class PelotaFisicas : PhysicManager
         recibiendoEfecto = false;
     }
 
-    public bool Lanzamiento(float length, Vector3 fin, Camera gameCamera)
+    public bool Lanzamiento(float length, Vector3 fin)
     {
         Vector3 direccionTiro;
         float fuerzaTiro;
         RaycastHit hit;
-        Ray ray = gameCamera.GetComponent<Camera>().ScreenPointToRay(fin);
+        Ray ray = GameObject.Find("Game Camera").GetComponent<Camera>().ScreenPointToRay(fin);
 
         if (Physics.Raycast(ray, out hit, 500))
         {

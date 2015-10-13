@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ModoPvP : ModoJuego {
- 
+public class ModoPvP : ModoJuego
+{
+
     MacthController.Rol rolInicial;
 
     public override void Inicializar()
@@ -24,6 +25,7 @@ public class ModoPvP : ModoJuego {
         accionRealizada = false;
         mController.reiniciarPelota();
         mController.ColocarCamara();
+        mController.enJuego();
     }
 
     public override void Update()
@@ -41,18 +43,18 @@ public class ModoPvP : ModoJuego {
                 contador += Time.deltaTime;
                 if (contador > timer)
                 {
-                    //desconectar
+                    GUI.DoBack();
                     esperaTiro = false;
                     accionRealizada = true;
                 }
             }
             if (mController.GetRolActual() == MacthController.Rol.Portero)
             {
-                    contador += Time.deltaTime;
-                    if (contador > timer)
-                    {
-                        //desconectar
-                    }
+                contador += Time.deltaTime;
+                if (contador > timer)
+                {
+                    GUI.DoBack();
+                }
             }
         }
     }

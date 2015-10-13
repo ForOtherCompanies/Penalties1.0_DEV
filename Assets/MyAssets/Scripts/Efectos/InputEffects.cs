@@ -7,6 +7,7 @@ public class InputEffects : MonoBehaviour
 	public Color c2 = Color.red;
 	private GameObject lineGO;
 	private LineRenderer lineRenderer;
+    public Camera camara;
 	private int i = 0;
 	
 	void Start ()
@@ -14,7 +15,7 @@ public class InputEffects : MonoBehaviour
 		lineGO = new GameObject ("Line");
 		lineGO.AddComponent<LineRenderer> ();
 		lineRenderer = lineGO.GetComponent<LineRenderer> ();
-		lineRenderer.material = new Material (Shader.Find ("Mobile/Particles/Additive"));
+		//lineRenderer.material = new Material (Shader.Find ("Mobile/Particles/Additive"));
 		lineRenderer.SetColors (c1, c2);
 		lineRenderer.SetWidth (0.05F, 0.05f);
 		lineRenderer.SetVertexCount (0);
@@ -29,7 +30,7 @@ public class InputEffects : MonoBehaviour
 			if (touch.phase == TouchPhase.Moved) {
 				lineRenderer.SetVertexCount (i + 1);
 				Vector3 mPosition = new Vector3 (Input.mousePosition.x, Input.mousePosition.y,1f);
-				lineRenderer.SetPosition (i, Camera.main.ScreenToWorldPoint (mPosition));
+			//	lineRenderer.SetPosition (i, camara.ScreenToWorldPoint (mPosition));
 				i++;
 			}
 			

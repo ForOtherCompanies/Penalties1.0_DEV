@@ -18,7 +18,10 @@ public class MacthController : MonoBehaviour
     public GameObject posicionCamaraPortero;
     public GameObject posicionCamaraTirador;
     public gameUI GUI;
-   // public CameraEffects cameraEffects;
+    // public CameraEffects cameraEffects;
+
+    private int posicion;
+    private bool Multiplayer;
 
     // Use this for initialization
     void Start()
@@ -45,6 +48,10 @@ public class MacthController : MonoBehaviour
         reset();
     }
 
+    public void enJuego()
+    {
+        Multiplayer = true;
+    }
 
     public void RealizarAcciones(float length, Vector3 final)
     {
@@ -54,13 +61,17 @@ public class MacthController : MonoBehaviour
         {
             //pelota.lanzamiento se lanzara desde la animacion del player tirando para que coincida con el momento justo
             ////desde aqui lo que habra que hacer es poner la animacion en 'play'
-            modalidadActivada.RealizarAccion(pelota.Lanzamiento(length, final, gameCamera));
+            modalidadActivada.RealizarAccion(pelota.Lanzamiento(length, final));
+            pelota.SendInfo(length, final);
+            Debug.Log("tirar");
 
         }
 
         if (rolActual == Rol.Portero)
         {
             portero.Saltar(final);
+            portero.SendInfo(final);
+            Debug.Log("Saltar");
         }
         this.GetComponent<InputManager>().enabled = false;
     }
@@ -95,7 +106,7 @@ public class MacthController : MonoBehaviour
 
     internal void IniciarCicloOutIn()
     {
-       // cameraEffects.IniciarCicloOutIn();
+        // cameraEffects.IniciarCicloOutIn();
     }
 
     internal void RealizarIAPortero()
@@ -160,7 +171,6 @@ public class MacthController : MonoBehaviour
         return nameOP;
     }
 
-    private int posicion;
 
 
 
@@ -182,5 +192,19 @@ public class MacthController : MonoBehaviour
     internal void SetPorteroPosition(Vector3 position, Quaternion rotation)
     {
         portero.setPosition(position, rotation);
+    }
+
+
+
+    public void SetAccion(float lenght, Vector3 final)
+    {
+        if (lenght < 0)
+        {
+            portero.Saltar(final);
+        }
+        else
+        {
+            pelota.Lanzamiento(lenght, final);
+        }
     }
 }
