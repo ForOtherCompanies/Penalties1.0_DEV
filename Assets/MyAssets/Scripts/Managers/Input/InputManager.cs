@@ -45,7 +45,7 @@ public class InputManager : MonoBehaviour {
      void Update ()
      {
      
-         if (Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Began) 
+         if (Input.touchCount>0 && Input.GetTouch (0).phase == TouchPhase.Began) 
          {
              final = Vector3.zero;
              length = 0;
@@ -53,8 +53,8 @@ public class InputManager : MonoBehaviour {
              Vector2 touchDeltaPosition = Input.GetTouch (0).position;
              startpos = new Vector3 (touchDeltaPosition.x, 0, touchDeltaPosition.y);
              inputEffects.iniciar();
-         }      
-         if (Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Moved) 
+         }
+         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved) 
          {
              SW = true;
              Vector2 touchPosition = Input.GetTouch(0).position;
@@ -63,28 +63,33 @@ public class InputManager : MonoBehaviour {
              length += final.magnitude;
              startpos = endpos;
          }
- 
-         if (Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Canceled) 
+
+         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Canceled) 
          {
              SW = false;
          }
- 
-         if (Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Stationary) 
+
+         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Stationary) 
          {
              SW = false;
          }
-         if (Input.touchCount > 0 && Input.GetTouch (0).phase == TouchPhase.Ended) 
+         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended) 
          {
              if (SW) 
              {
+
+                 Debug.Log("parece que funciona");
                  Vector2 touchPosition = Input.GetTouch (0).position;
                  endpos = new Vector3 (touchPosition.x, 0, touchPosition.y);
                  final = endpos - startpos;
                  length += final.magnitude;
 
                  this.GetComponent<MacthController>().RealizarAcciones(length, endpos);
-
                  inputEffects.Parar();
+             }
+             else
+             {
+                 Debug.Log("error en el input");
              }
          }
      }

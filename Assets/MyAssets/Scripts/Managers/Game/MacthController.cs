@@ -57,6 +57,7 @@ public class MacthController : MonoBehaviour
     {
         //if 'estamos como delantero y todo esta correcto para lanzar'
         ////then pelota.fisicas.Lanzar (inicio, fin,fuerza);
+        Debug.Log(rolActual);
         if (rolActual == Rol.Tirador)
         {
             //pelota.lanzamiento se lanzara desde la animacion del player tirando para que coincida con el momento justo
