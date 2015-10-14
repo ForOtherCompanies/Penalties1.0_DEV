@@ -55,7 +55,7 @@ public class PelotaFisicas : PhysicManager
         rb.isKinematic = false;
         tiroIA = true;
         efectoConstanteCalculado = false;
-        rb.AddForce(direccion * fuerza * 2); //esto es la fuerza del tiro NO el efecto
+        rb.AddForce(direccion * fuerza); //esto es la fuerza del tiro NO el efecto
         if (Random.Range(1, 100) < level * 9)
         {
             recibiendoEfecto = true;
@@ -119,15 +119,14 @@ public class PelotaFisicas : PhysicManager
 
         if (Physics.Raycast(ray, out hit, 500))
         {
-            direccionTiro = posicion.transform.position - hit.point;
+            direccionTiro = hit.point - posicion.transform.position;
             direccionTiro = direccionTiro.normalized;
             direccionTiro.y *= 2.68f;
             rb.isKinematic = false;
             tiroIA = false;
-            fuerzaTiro = Mathf.Clamp(length, 0, 150);
+            fuerzaTiro = Mathf.Clamp(length, 170,190);
             rb.AddForce(direccionTiro * fuerzaTiro); //esto es la fuerza del tiro NO el efecto
             recibiendoEfecto = true;
-            //Debug.Log ("LANZAMIENTO_EFECTO = "+ recibiendoEfecto);
 
             return true;
         }

@@ -3,10 +3,10 @@ using System.Collections;
 
 public class IAManager : MonoBehaviour {
 
-	protected static float MinX=-7.5f;
-	protected static float MaxX=1.35f;
-	protected static float MinY=0.8f;
-	protected static float MaxY=2.7f;
+	protected static float MinX=-100f;
+	protected static float MaxX=100f;
+	protected static float MinY=0f;
+	protected static float MaxY=100f;
 	protected static float Z = 11.13f;
 	protected static float MaxForce;
 	protected static float MinForce;
