@@ -115,13 +115,11 @@ public class PelotaFisicas : PhysicManager
         Vector3 direccionTiro;
         float fuerzaTiro;
         RaycastHit hit;
-        Ray ray = GameObject.Find("Game Camera").GetComponent<Camera>().ScreenPointToRay(fin);
+        Ray ray = GameObject.FindWithTag("GameCamera").GetComponent<Camera>().ScreenPointToRay(fin);
 
         if (Physics.Raycast(ray, out hit, 500))
         {
-            //  if (hit.transform.tag == "RaycastReactor")
-            // {
-            direccionTiro = hit.point - posicion.transform.position;
+            direccionTiro = posicion.transform.position - hit.point;
             direccionTiro = direccionTiro.normalized;
             direccionTiro.y *= 2.68f;
             rb.isKinematic = false;
@@ -132,8 +130,6 @@ public class PelotaFisicas : PhysicManager
             //Debug.Log ("LANZAMIENTO_EFECTO = "+ recibiendoEfecto);
 
             return true;
-            //  }
-            //    return false;
         }
 
         return false;

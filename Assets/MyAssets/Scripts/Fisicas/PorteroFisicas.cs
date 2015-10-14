@@ -28,7 +28,7 @@ public class PorteroFisicas : PhysicManager{
         Vector3 direccionSalto; 
         float fuerzaSalto;
 
-        Vector3 vectorSalto = final-this.transform.position;
+        Vector3 vectorSalto = this.transform.position - final;
 
         //si la potencia del salto es demasiado grande se clampea a 150
         if (vectorSalto.magnitude > 150)
@@ -37,7 +37,7 @@ public class PorteroFisicas : PhysicManager{
         //partimos el vector en direccion+magnitud para mandarselo al script de fisicas del portero
         fuerzaSalto = vectorSalto.magnitude;
         direccionSalto = vectorSalto.normalized;
-        direccionSalto.x *= (-1);
+       // direccionSalto.x *= (-1);
         rb.AddForce(direccionSalto * fuerzaSalto * 2);
     }
 

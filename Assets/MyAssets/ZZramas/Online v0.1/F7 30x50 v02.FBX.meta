@@ -1,27 +1,30 @@
 fileFormatVersion: 2
-guid: 16226125b02e1b84da6de8c7cc645686
-timeCreated: 1444159706
+guid: 7cf04633ff9bccb42abd3b46014d658b
+timeCreated: 1444812527
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
     100000: //RootNode
-    100002: Gradas001
-    100004: Porteria001
-    100006: Surface001
+    100002: Gradas004
+    100004: Plane001
+    100006: referenceNOTocar001
     400000: //RootNode
-    400002: Gradas001
-    400004: Porteria001
-    400006: Surface001
-    2300000: Gradas001
-    2300002: Porteria001
-    2300004: Surface001
-    3300000: Gradas001
-    3300002: Porteria001
-    3300004: Surface001
-    4300000: Porteria001
-    4300002: Gradas001
-    4300004: Surface001
+    400002: Gradas004
+    400004: Plane001
+    400006: referenceNOTocar001
+    2300000: Gradas004
+    2300002: Plane001
+    2300004: referenceNOTocar001
+    3300000: Gradas004
+    3300002: Plane001
+    3300004: referenceNOTocar001
+    4300000: Gradas004
+    4300002: referenceNOTocar001
+    4300004: Plane001
+    6400000: Gradas004
+    6400002: Plane001
+    6400004: referenceNOTocar001
   materials:
     importMaterials: 1
     materialName: 0
@@ -47,7 +50,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0

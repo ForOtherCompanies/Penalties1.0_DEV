@@ -62,7 +62,8 @@ public class MacthController : MonoBehaviour
             //pelota.lanzamiento se lanzara desde la animacion del player tirando para que coincida con el momento justo
             ////desde aqui lo que habra que hacer es poner la animacion en 'play'
             modalidadActivada.RealizarAccion(pelota.Lanzamiento(length, final));
-            pelota.SendInfo(length, final);
+            if (Multiplayer)
+                pelota.SendInfo(length, final);
             Debug.Log("tirar");
 
         }
@@ -70,7 +71,8 @@ public class MacthController : MonoBehaviour
         if (rolActual == Rol.Portero)
         {
             portero.Saltar(final);
-            portero.SendInfo(final);
+            if (Multiplayer)
+                portero.SendInfo(final);
             Debug.Log("Saltar");
         }
         this.GetComponent<InputManager>().enabled = false;
