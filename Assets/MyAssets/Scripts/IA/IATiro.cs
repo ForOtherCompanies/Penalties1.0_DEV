@@ -14,29 +14,16 @@ public class IATiro : IAManager
 
     public override void RealizarAccion()
     {
-        float minX = MinX;
-        float maxX = MaxX;
-        /*
-        switch (Random.Range(0, 3))
-        {
-            case 0:
-                minX = 0;
-                break;
-            case 1:
-                maxX = 0;
-                break;
-
-        }
-         * */
-        x = Random.Range(minX, maxX);
+        x = Random.Range(MinX, MaxX);
         y = Random.Range(MinY, MaxY);
         direccion = new Vector3(x, y, 0);
         //direccion =impacto - Posicion.transform.position ;
         //direccion = direccion.normalized;
        // direccion.y *= 5f;
+
+        direccion.Normalize();
         direccion.z = 1;
-        direccion.y = Mathf.Clamp(direccion.y, 0f, 0.7f);
-        direccion.x = Mathf.Clamp(direccion.y, -0.7f, 0.7f);
+        direccion.x = Mathf.Clamp(direccion.x, -0.6f, 0.6f);
         Debug.Log("vector IA tiro " + direccion);
         fuerza = Random.Range(MinForce, MaxForce);
         fisicasIA.AccionIA(direccion, fuerza, level);
