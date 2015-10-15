@@ -82,7 +82,6 @@ public class InputManager : MonoBehaviour {
                  Debug.Log("parece que funciona");
                  Vector2 touchPosition = Input.GetTouch (0).position;
                  endpos = new Vector3 (touchPosition.x, touchPosition.y,0 );
-                 Debug.Log(endpos);
                  final = endpos - startpos;
                  length += final.magnitude;
 
