@@ -41,20 +41,20 @@ public class ModoPvP : ModoJuego
             if (esperaTiro)
             {
                 contador += Time.deltaTime;
-                if (contador > timer)
+               /* if (contador > timer)
                 {
                     GUI.DoBack();
                     esperaTiro = false;
                     accionRealizada = true;
-                }
+                }*/
             }
             if (mController.GetRolActual() == MacthController.Rol.Portero)
             {
                 contador += Time.deltaTime;
-                if (contador > timer)
+                /*if (contador > timer)
                 {
                     GUI.DoBack();
-                }
+                }*/
             }
         }
     }

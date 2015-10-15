@@ -14,7 +14,8 @@ public class MacthController : MonoBehaviour
     Rol rolActual;
     public PelotaFisicas pelota;
     public Camera gameCamera;
-    public PorteroFisicas portero;
+    public GameObject portero;
+    public GameObject tirador;
     public GameObject posicionCamaraPortero;
     public GameObject posicionCamaraTirador;
     public gameUI GUI;
@@ -53,16 +54,19 @@ public class MacthController : MonoBehaviour
         Multiplayer = true;
     }
 
-    public void RealizarAcciones(float length, Vector3 final, Vector3 Inicio)
+    public void RealizarAcciones(float _length, Vector3 _final, Vector3 _Inicio)
     {
         //if 'estamos como delantero y todo esta correcto para lanzar'
         ////then pelota.fisicas.Lanzar (inicio, fin,fuerza);
+        length = _length;
+        final = _final;
         Debug.Log(rolActual);
         if (rolActual == Rol.Tirador)
         {
             //pelota.lanzamiento se lanzara desde la animacion del player tirando para que coincida con el momento justo
             ////desde aqui lo que habra que hacer es poner la animacion en 'play'
-            modalidadActivada.RealizarAccion(pelota.Lanzamiento(length, final));
+            tirador.GetComponent<AnimationController>().Tirar();
+            //activar animacion
             if (Multiplayer)
                 pelota.SendInfo(length, final);
             Debug.Log("tirar");
@@ -71,9 +75,11 @@ public class MacthController : MonoBehaviour
 
         if (rolActual == Rol.Portero)
         {
-            portero.Saltar(final-Inicio);
+            final = final - _Inicio;
+            portero.GetComponent<AnimationController>().Saltar();
+            //activar animacion
             if (Multiplayer)
-                portero.SendInfo(final-Inicio);
+                portero.GetComponent<PorteroFisicas>().SendInfo(final);
             Debug.Log("Saltar");
         }
         this.GetComponent<InputManager>().enabled = false;
@@ -104,7 +110,10 @@ public class MacthController : MonoBehaviour
 
     internal void RealizarIATiro()
     {
-        this.GetComponent<IATiro>().RealizarAccion();
+
+        //activar animacion IA
+
+        tirador.GetComponent<AnimationController>().TirarIA();
     }
 
     internal void IniciarCicloOutIn()
@@ -114,7 +123,8 @@ public class MacthController : MonoBehaviour
 
     internal void RealizarIAPortero()
     {
-        this.GetComponent<IAPortero>().RealizarAccion();
+        //activar animacion IA
+        portero.GetComponent<AnimationController>().SaltarIA();
     }
 
     public void ColocarCamara()
@@ -137,8 +147,13 @@ public class MacthController : MonoBehaviour
 
     public void reset()
     {
+
+        pelota.SetTirador(portero);
+        portero = tirador;
+        tirador = pelota.GetTirador();
+        this.GetComponent<IAPortero>().SetPortero(portero);
         pelota.reiniciar();
-        portero.reiniciar();
+        portero.GetComponent<PorteroFisicas>().reiniciar();
     }
 
 
@@ -164,6 +179,10 @@ public class MacthController : MonoBehaviour
     }
 
     string nameOP = "Com";
+    private float length;
+    private Vector3 final;
+    private Vector3 finalPVP;
+    private float lenghtPVP;
 
     public void SetOponentName(string nombre)
     {
@@ -187,27 +206,67 @@ public class MacthController : MonoBehaviour
         return posicion;
     }
 
-    internal void SetBallPosition(Vector3 position, Quaternion rotation)
-    {
-        pelota.setPosition(position, rotation);
-    }
-
-    internal void SetPorteroPosition(Vector3 position, Quaternion rotation)
-    {
-        portero.setPosition(position, rotation);
-    }
-
 
 
     public void SetAccion(float lenght, Vector3 final)
     {
+        finalPVP = final;
+        lenghtPVP = lenght;
         if (lenght < 0)
         {
-            portero.Saltar(final);
+            portero.GetComponent<AnimationController>().SaltarMP();
         }
         else
         {
-            pelota.Lanzamiento(lenght, final);
+            tirador.GetComponent<AnimationController>().TirarMP();
+        }
+    }
+
+    public void DoAccion(bool MP, bool IA)
+    {
+        Debug.Log("Accion Realizada");
+        if (!MP)
+        {
+            if (rolActual == Rol.Tirador)
+            {
+                //pelota.lanzamiento se lanzara desde la animacion del player tirando para que coincida con el momento justo
+                ////desde aqui lo que habra que hacer es poner la animacion en 'play'
+
+                if (IA)
+                {
+
+                    this.GetComponent<IAPortero>().RealizarAccion();
+                }
+                else
+                {
+                    modalidadActivada.RealizarAccion(pelota.Lanzamiento(length, final));
+                }
+
+            }
+
+            if (rolActual == Rol.Portero)
+            {
+                if (!IA)
+                    portero.GetComponent<PorteroFisicas>().Saltar(final);
+                else
+                    this.GetComponent<IATiro>().RealizarAccion();
+            }
+        }
+        else
+        {
+            if (rolActual == Rol.Tirador)
+            {
+                //pelota.lanzamiento se lanzara desde la animacion del player tirando para que coincida con el momento justo
+                ////desde aqui lo que habra que hacer es poner la animacion en 'play'
+
+                portero.GetComponent<PorteroFisicas>().Saltar(finalPVP);
+
+            }
+
+            if (rolActual == Rol.Portero)
+            {
+                modalidadActivada.RealizarAccion(pelota.Lanzamiento(lenghtPVP, finalPVP));
+            }
         }
     }
 }

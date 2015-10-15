@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-Build from EVA-02 On 10/15/2015 3:44:25 AM
-=======
-Build from JORGE-PC On 10/15/2015 3:32:11 AM
->>>>>>> origin/Online-v0.1
+Build from JORGE-PC On 10/15/2015 1:04:08 PM

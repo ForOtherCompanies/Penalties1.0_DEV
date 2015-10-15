@@ -19,6 +19,9 @@ public class PelotaFisicas : PhysicManager
     private float fuerzaEfecto;
     private Vector3 posicionInicio;
 
+    public GameObject tirador;
+    public GameObject posicionTirador;
+
 
     //debugOnly
 
@@ -108,6 +111,8 @@ public class PelotaFisicas : PhysicManager
     {
         base.reiniciar();
         recibiendoEfecto = false;
+        tirador.transform.position = posicionTirador.transform.position;
+        tirador.transform.rotation = posicionTirador.transform.rotation;
     }
 
     public bool Lanzamiento(float length, Vector3 fin)
@@ -124,7 +129,7 @@ public class PelotaFisicas : PhysicManager
             direccionTiro.y *= 2.68f;
             rb.isKinematic = false;
             tiroIA = false;
-            fuerzaTiro = Mathf.Clamp(length, 170,190);
+            fuerzaTiro = Mathf.Clamp(length, 170, 190);
             rb.AddForce(direccionTiro * fuerzaTiro); //esto es la fuerza del tiro NO el efecto
             recibiendoEfecto = true;
 
@@ -139,5 +144,15 @@ public class PelotaFisicas : PhysicManager
 
         transform.position = position;
         transform.rotation = rotation;
+    }
+
+    internal void SetTirador(GameObject portero)
+    {
+        tirador = portero;
+    }
+
+    internal GameObject GetTirador()
+    {
+        return tirador;
     }
 }

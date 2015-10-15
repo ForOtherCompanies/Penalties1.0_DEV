@@ -38,4 +38,9 @@ public class IAPortero : IAManager
         fisicasIA.AccionIA(direccion, fuerza, level);
         //level = Mathf.Clamp(level,0,8)+1;
     }
+
+    internal void SetPortero(GameObject portero)
+    {
+        fisicasIA = portero.GetComponent<PorteroFisicas>();
+    }
 }
