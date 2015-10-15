@@ -53,10 +53,11 @@ public class MacthController : MonoBehaviour
         Multiplayer = true;
     }
 
-    public void RealizarAcciones(float length, Vector3 final)
+    public void RealizarAcciones(float length, Vector3 final, Vector3 Inicio)
     {
         //if 'estamos como delantero y todo esta correcto para lanzar'
         ////then pelota.fisicas.Lanzar (inicio, fin,fuerza);
+        Debug.Log(rolActual);
         if (rolActual == Rol.Tirador)
         {
             //pelota.lanzamiento se lanzara desde la animacion del player tirando para que coincida con el momento justo
@@ -70,9 +71,9 @@ public class MacthController : MonoBehaviour
 
         if (rolActual == Rol.Portero)
         {
-            portero.Saltar(final);
+            portero.Saltar(final-Inicio);
             if (Multiplayer)
-                portero.SendInfo(final);
+                portero.SendInfo(final-Inicio);
             Debug.Log("Saltar");
         }
         this.GetComponent<InputManager>().enabled = false;
