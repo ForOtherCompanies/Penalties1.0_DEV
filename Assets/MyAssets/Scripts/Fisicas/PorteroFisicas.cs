@@ -17,39 +17,31 @@ public class PorteroFisicas : PhysicManager
     // Update is called once per frame
     public void SendInfo(Vector3 final)
     {
+        Debug.Log("Vector mandado Portero" + final);
         GameConector.sendPortero(final);
 
     }
     public override void AccionIA(Vector3 direccion, float fuerza, int level)
     {
-        rb.AddForce(direccion * fuerza * 2);
+        rb.AddForce(direccion * fuerza * 30f);
+        if (direccion.x > 0)
+            rb.AddTorque(0, 0, -fuerza);
+        else
+            rb.AddTorque(0, 0, fuerza);
     }
 
 
     internal void Saltar(Vector3 final)
-    {/*
-        Vector3 direccionSalto;
+    {
         float fuerzaSalto;
-
-        Vector3 vectorSalto = final - this.transform.position;
-
-        //si la potencia del salto es demasiado grande se clampea a 150
-        vectorSalto.z = 0;
-        fuerzaSalto = Vector3.ClampMagnitude(vectorSalto, 150).magnitude;
-
-        //partimos el vector en direccion+magnitud para mandarselo al script de fisicas del portero
-        //fuerzaSalto = vectorSalto.magnitude;
-        direccionSalto = vectorSalto.normalized;
-        Debug.Log(direccionSalto);
-
-        rb.AddForce(direccionSalto * fuerzaSalto * 2);
-      */
-        float fuerzaSalto;
-        fuerzaSalto = Mathf.Clamp(final.magnitude, 150, 190); ;
+        fuerzaSalto = Mathf.Clamp(final.magnitude, 150, 180); ;
         final.x *= -1;
         final.z = 0;
-        rb.AddForce(final.normalized * fuerzaSalto*2);
-
+        rb.AddForce(final.normalized * fuerzaSalto*20f);
+        if (final.x > 0)
+            rb.AddTorque(0, 0, -fuerzaSalto );
+        else
+            rb.AddTorque(0, 0, fuerzaSalto);
     }
 
     internal void setPosition(Vector3 position, Quaternion rotation)

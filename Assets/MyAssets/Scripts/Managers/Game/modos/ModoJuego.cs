@@ -94,10 +94,8 @@ public class ModoJuego
                 contador += Time.deltaTime;
                 if (contador > timer)
                 {
-                    mController.RealizarIATiro();
-                    accionIA = true;
-                    esperaTiro = false;
-                    accionRealizada = true;
+                   // mController.RealizarIATiro();
+                        accionRealizada = true;
                 }
             }
             if (mController.GetRolActual() == MacthController.Rol.Portero)

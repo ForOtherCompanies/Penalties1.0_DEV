@@ -20,9 +20,6 @@ using GooglePlayGames.BasicApi.Multiplayer;
 
 public class peloGUI : BaseGui
 {
-    WidgetConfig VScomCfg = new WidgetConfig(0.0f, -0.1f, 0.8f, 0.1f, 60, "Vs com");
-    WidgetConfig GkeeperCfg = new WidgetConfig(0.0f, 0.0f, 0.8f, 0.1f, 60, "Paradas");
-    WidgetConfig DianaCfg = new WidgetConfig(0.0f, 0.1f, 0.8f, 0.1f, 60, "Dianas");
 
     public void Start()
     {
@@ -54,21 +51,5 @@ public class peloGUI : BaseGui
 
     protected override void DoGUI()
     {
-
-        if (GuiButton(VScomCfg))
-        {
-            //GameConector.CreateQuickGame();
-            //gameObject.GetComponent<RaceGui>().MakeActive();
-        }
-        else if (GuiButton(GkeeperCfg))
-        {
-            //GameConector.CreateWithInvitationScreen();
-            //gameObject.GetComponent<RaceGui>().MakeActive();
-        }
-        else if (GuiButton(DianaCfg))
-        {
-            //GameConector.AcceptFromInbox();
-            //gameObject.GetComponent<RaceGui>().MakeActive();
-        }
     }
 }

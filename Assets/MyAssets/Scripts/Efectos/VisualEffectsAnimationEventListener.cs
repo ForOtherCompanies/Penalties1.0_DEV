@@ -7,6 +7,6 @@ public class VisualEffectsAnimationEventListener : MonoBehaviour {
 
 	public void ResetCicloFadeInOutFlag(){
 		cameraEffects.ResetCicloFlag();
-		//cameraEffects.fadeCameraAnimator.SetBool ("CicloFadeOutIn", false);
+		cameraEffects.fadeCameraAnimator.SetBool ("CicloFadeOutIn", false);
 	}
 }

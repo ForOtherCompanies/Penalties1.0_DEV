@@ -26,7 +26,6 @@ public class ModoVSia : ModoJuego
         }
         if (fase < 5)
         {
-
             Debug.Log(fase);
             mController.ColocarCamara();
             mController.activarInput();

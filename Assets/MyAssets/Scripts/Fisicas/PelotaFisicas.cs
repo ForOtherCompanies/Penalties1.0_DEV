@@ -117,26 +117,29 @@ public class PelotaFisicas : PhysicManager
 
     public bool Lanzamiento(float length, Vector3 fin)
     {
-        Vector3 direccionTiro;
+        Vector3 direccionTiro = fin;
         float fuerzaTiro;
-        RaycastHit hit;
-        Ray ray = GameObject.FindWithTag("GameCamera").GetComponent<Camera>().ScreenPointToRay(fin);
+        // RaycastHit hit;
+        // Ray ray = GameObject.FindWithTag("GameCamera").GetComponent<Camera>().ScreenPointToRay(fin);
 
-        if (Physics.Raycast(ray, out hit, 500))
-        {
-            direccionTiro = hit.point - posicion.transform.position;
-            direccionTiro = direccionTiro.normalized;
-            direccionTiro.y *= 2.68f;
-            rb.isKinematic = false;
-            tiroIA = false;
-            fuerzaTiro = Mathf.Clamp(length, 170, 190);
-            rb.AddForce(direccionTiro * fuerzaTiro); //esto es la fuerza del tiro NO el efecto
-            recibiendoEfecto = true;
+        //if (Physics.Raycast(ray, out hit, 500))
+        //{
+        // direccionTiro = hit.point - posicion.transform.position;
+        direccionTiro = direccionTiro.normalized;
+        // direccionTiro.y *= 2.68f;
 
-            return true;
-        }
+        direccionTiro.z = 1;
+        direccionTiro.y *= 0.85f;
+        rb.isKinematic = false;
+        tiroIA = false;
+        fuerzaTiro = Mathf.Clamp(length, 170, 190);
+        rb.AddForce(direccionTiro * fuerzaTiro); //esto es la fuerza del tiro NO el efecto
+        recibiendoEfecto = true;
 
-        return false;
+        return true;
+        //        }
+
+        //return false;
     }
 
     internal void setPosition(Vector3 position, Quaternion rotation)

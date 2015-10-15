@@ -41,12 +41,13 @@ public class MacthController : MonoBehaviour
 
     public void ActivarModoActual(ModoJuego modo)
     {
+        reset();
         modalidadActivada = modo;
         modalidadActivada.SetMController(this);
         modalidadActivada.Inicializar();
         modalidadActivada.SetGUI(GUI);
         this.GetComponent<InputManager>().enabled = true;
-        reset();
+       
     }
 
     public void enJuego()
@@ -60,6 +61,7 @@ public class MacthController : MonoBehaviour
         ////then pelota.fisicas.Lanzar (inicio, fin,fuerza);
         length = _length;
         final = _final;
+        final = final - _Inicio;
         Debug.Log(rolActual);
         if (rolActual == Rol.Tirador)
         {
@@ -75,7 +77,6 @@ public class MacthController : MonoBehaviour
 
         if (rolActual == Rol.Portero)
         {
-            final = final - _Inicio;
             portero.GetComponent<AnimationController>().Saltar();
             //activar animacion
             if (Multiplayer)
@@ -148,12 +149,20 @@ public class MacthController : MonoBehaviour
     public void reset()
     {
 
+        portero.GetComponent<AnimationController>().IdleTiro();
+        tirador.GetComponent<AnimationController>().IdleSalto();
         pelota.SetTirador(portero);
         portero = tirador;
         tirador = pelota.GetTirador();
         this.GetComponent<IAPortero>().SetPortero(portero);
         pelota.reiniciar();
         portero.GetComponent<PorteroFisicas>().reiniciar();
+
+        tirador.GetComponent<BoxCollider>().enabled = false;
+        tirador.GetComponent<Rigidbody>().isKinematic = true;
+
+        portero.GetComponent<BoxCollider>().enabled = true;
+        portero.GetComponent<Rigidbody>().isKinematic = false;
     }
 
 
@@ -208,13 +217,14 @@ public class MacthController : MonoBehaviour
 
 
 
-    public void SetAccion(float lenght, Vector3 final)
+    public void SetAccion(float _lenght, Vector3 _final)
     {
-        finalPVP = final;
-        lenghtPVP = lenght;
-        if (lenght < 0)
+        finalPVP = _final;
+        lenghtPVP = _lenght;
+        if (_lenght < 0)
         {
             portero.GetComponent<AnimationController>().SaltarMP();
+            Debug.Log("Vector recibido Portero" + _final);
         }
         else
         {
@@ -249,7 +259,11 @@ public class MacthController : MonoBehaviour
                 if (!IA)
                     portero.GetComponent<PorteroFisicas>().Saltar(final);
                 else
+                {
                     this.GetComponent<IATiro>().RealizarAccion();
+                    modalidadActivada.RealizarAccion(false);
+                    modalidadActivada.RealizarAccion(true);
+                }
             }
         }
         else
@@ -266,6 +280,7 @@ public class MacthController : MonoBehaviour
             if (rolActual == Rol.Portero)
             {
                 modalidadActivada.RealizarAccion(pelota.Lanzamiento(lenghtPVP, finalPVP));
+                modalidadActivada.RealizarAccion(true);
             }
         }
     }

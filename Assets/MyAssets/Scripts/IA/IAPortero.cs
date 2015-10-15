@@ -32,7 +32,8 @@ public class IAPortero : IAManager
         //direccion =impacto - Posicion.transform.position ;
         //direccion.z=0;
         direccion.Normalize();
-       // direccion.y = Mathf.Clamp(direccion.y, 0.5f, 0.7f);
+        direccion.y = Random.Range(0.2f, 0.5f);
+        direccion.x = Random.Range(-0.5f, 0.5f);
         Debug.Log("vector IA portero "+ direccion);
         fuerza = Random.Range(MinForce, MaxForce);
         fisicasIA.AccionIA(direccion, fuerza, level);

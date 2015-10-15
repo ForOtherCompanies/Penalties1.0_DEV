@@ -98,6 +98,11 @@ public class gameUI : BaseGui
     {
         gameObject.GetComponent<TrainingGUI>().MakeActive();
         gameObject.GetComponentInParent<CameraController>().DesactivarGameCamera();
+        for (int i = 0; i < 5; ++i)
+        {
+            estadoJuegoP[i] = 0;
+            estadoJuegoT[i] = 0;
+        }
         mController.Desactivar();
     }
 

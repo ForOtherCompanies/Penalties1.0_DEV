@@ -23,7 +23,7 @@ public class IATiro : IAManager
 
         direccion.Normalize();
         direccion.z = 1;
-        direccion.x = Mathf.Clamp(direccion.x, -0.6f, 0.6f);
+        direccion.x = Random.Range(-0.6f, 0.6f);
         Debug.Log("vector IA tiro " + direccion);
         fuerza = Random.Range(MinForce, MaxForce);
         fisicasIA.AccionIA(direccion, fuerza, level);

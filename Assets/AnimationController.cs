@@ -72,12 +72,14 @@ public class AnimationController : MonoBehaviour
     {
         Reiniciar();
         PlayerAnimator.SetBool("Idle_Salto", true);
+        Debug.Log("IDLE Salto");
     }
 
     internal void IdleTiro()
     {
         Reiniciar();
         PlayerAnimator.SetBool("Idle_Tiro", true);
+        Debug.Log("IDLE TIRO");
     }
 
     internal void realizarAccion()
