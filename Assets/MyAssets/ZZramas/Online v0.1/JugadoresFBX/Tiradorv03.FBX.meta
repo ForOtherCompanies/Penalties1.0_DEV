@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: b8f21b82f47324f40b13a5fb40f2d506
-timeCreated: 1444864581
+guid: 6955ca73410e2534485102bfca8b7e1d
+timeCreated: 1444864486
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
@@ -71,7 +71,7 @@ ModelImporter:
     400062: //RootNode
     4300000: Object002
     7400000: Idle
-    7400002: Salto
+    7400002: Tiro
     9500000: //RootNode
     13700000: Object002
   materials:
@@ -98,7 +98,7 @@ ModelImporter:
       name: Idle
       takeName: Take 001
       firstFrame: 0
-      lastFrame: 60
+      lastFrame: 160
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -210,10 +210,10 @@ ModelImporter:
       maskType: 0
       maskSource: {instanceID: 0}
     - serializedVersion: 16
-      name: Salto
+      name: Tiro
       takeName: Take 001
-      firstFrame: 60
-      lastFrame: 66
+      firstFrame: 161
+      lastFrame: 335
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
