@@ -119,14 +119,7 @@ public class PelotaFisicas : PhysicManager
     {
         Vector3 direccionTiro = fin;
         float fuerzaTiro;
-        // RaycastHit hit;
-        // Ray ray = GameObject.FindWithTag("GameCamera").GetComponent<Camera>().ScreenPointToRay(fin);
-
-        //if (Physics.Raycast(ray, out hit, 500))
-        //{
-        // direccionTiro = hit.point - posicion.transform.position;
         direccionTiro = direccionTiro.normalized;
-        // direccionTiro.y *= 2.68f;
 
         direccionTiro.z = 1;
         direccionTiro.y *= 0.85f;
@@ -137,9 +130,6 @@ public class PelotaFisicas : PhysicManager
         recibiendoEfecto = true;
 
         return true;
-        //        }
-
-        //return false;
     }
 
     internal void setPosition(Vector3 position, Quaternion rotation)

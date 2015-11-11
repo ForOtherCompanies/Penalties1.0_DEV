@@ -34,10 +34,12 @@ public class PorteroFisicas : PhysicManager
     internal void Saltar(Vector3 final)
     {
         float fuerzaSalto;
-        fuerzaSalto = Mathf.Clamp(final.magnitude, 150, 180); ;
-        final.x *= -1;
+        fuerzaSalto = Mathf.Clamp(final.magnitude, 135, 145);
+        final = final.normalized;
         final.z = 0;
-        rb.AddForce(final.normalized * fuerzaSalto*20f);
+        final.x *= -1;
+        rb.AddForce(final * fuerzaSalto*20f);
+
         if (final.x > 0)
             rb.AddTorque(0, 0, -fuerzaSalto );
         else

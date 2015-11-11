@@ -57,6 +57,7 @@ public class WelcomeGui : BaseGui
 
         var config = new PlayGamesClientConfiguration.Builder()
             .WithInvitationDelegate(InvitationManager.Instance.OnInvitationReceived)
+            .EnableSavedGames()
             .Build();
 
         PlayGamesPlatform.InitializeInstance(config);
